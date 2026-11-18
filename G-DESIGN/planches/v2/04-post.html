@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cartographe · V2 Plâtre · Post — dans le feed</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#d9d6cf}
+body{overflow-x:hidden;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.sheet{width:1980px;padding:40px 48px 56px;transform-origin:0 0;font-family:"Helvetica Neue",Arial,"Liberation Sans",sans-serif;color:#1c1a17}
+.sh-top{display:grid;grid-template-columns:1fr 540px;gap:48px;margin-bottom:28px;align-items:end}
+.sh-id{font:600 11px/1 "DejaVu Sans Mono",Menlo,monospace;letter-spacing:.14em;text-transform:uppercase;color:#6d675c}
+.sh-title{font-size:44px;font-weight:700;letter-spacing:-.02em;margin:12px 0 10px}
+.sh-why{font-size:15px;line-height:1.5;max-width:900px;color:#3a372f}
+.sh-why b{font-weight:600}
+.sw{display:flex;gap:10px;margin-bottom:14px}
+.sw div{flex:1;height:58px;border-radius:6px;padding:8px;display:flex;align-items:flex-end;font:600 10px/1.2 "DejaVu Sans Mono",monospace;letter-spacing:.04em;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)}
+.spec{font-size:13px;color:#3a372f;line-height:1.5}
+#replay{margin-top:12px;font:600 11px/1 "DejaVu Sans Mono",monospace;letter-spacing:.12em;text-transform:uppercase;border:1px solid #1c1a17;border-radius:999px;padding:9px 14px}
+.frames{display:flex;gap:48px;align-items:flex-start}
+.fr-l{font:600 11px/1 "DejaVu Sans Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:#6d675c;margin-bottom:10px}
+.desk{width:1440px;height:900px;background:#f4f4f2;border-radius:10px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(0,0,0,.35);display:flex;flex-direction:column}
+.d-top{height:56px;background:#fff;border-bottom:1px solid #e3e3df;display:flex;align-items:center;padding:0 24px;gap:20px;flex:none}
+.d-top .logo{width:32px;height:32px;border-radius:50%;background:#d8d8d3}
+.d-top .search{width:560px;height:38px;border-radius:19px;background:#efefeb;margin:0 auto}
+.d-top .me{width:32px;height:32px;border-radius:50%;background:#cfcfc9}
+.d-body{flex:1;display:grid;grid-template-columns:232px 1fr 312px;gap:24px;padding:20px 24px 0;overflow:hidden}
+.d-nav{border-right:1px solid #e3e3df;padding-right:16px}
+.bar{height:10px;border-radius:5px;background:#e2e2dd;margin:14px 0}
+.d-col{width:756px;justify-self:center}
+.post{background:#fff;border-radius:14px;border:1px solid #e3e3df;overflow:hidden}
+.p-head{display:flex;align-items:center;gap:10px;padding:12px 16px 4px;font-size:12px;color:#5f5f5a}
+.p-head .av{width:24px;height:24px;border-radius:50%}
+.p-head b{color:#1c1c1a;font-weight:600}
+.p-title{padding:2px 16px 10px;font-size:18px;font-weight:600;color:#1c1c1a;letter-spacing:-.01em}
+.p-act{display:flex;gap:10px;padding:10px 16px 12px;font-size:12px;font-weight:600;color:#4c4c48}
+.p-act span{display:inline-flex;align-items:center;gap:6px;background:#f0f0ec;border-radius:16px;padding:7px 12px}
+.d-side .card{background:#fff;border:1px solid #e3e3df;border-radius:14px;padding:16px}
+.mob{width:390px;height:844px;background:#fff;border-radius:44px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(0,0,0,.4);outline:10px solid #111;display:flex;flex-direction:column;flex:none}
+.m-status{height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 30px;font:600 14px/1 "Helvetica Neue",Arial,sans-serif;color:#111;flex:none}
+.m-status i{width:70px;height:10px;border-radius:5px;background:#111;display:block}
+.m-bar{height:48px;display:flex;align-items:center;gap:10px;padding:0 14px;font-size:14px;font-weight:600;color:#1c1c1a;border-bottom:1px solid #ececea;flex:none}
+.m-bar .av{width:24px;height:24px;border-radius:50%}
+.m-meta{padding:8px 14px 6px;flex:none}
+.m-meta .t{font-size:15px;font-weight:600;color:#1c1c1a}
+.m-meta .s{font-size:11px;color:#6b6b66;margin-top:2px}
+.m-view{flex:none;height:616px;overflow:hidden;position:relative}
+.m-act{flex:1;display:flex;gap:8px;align-items:center;padding:0 14px;font-size:12px;font-weight:600;color:#4c4c48}
+.m-act span{display:inline-flex;align-items:center;gap:5px;background:#f0f0ec;border-radius:16px;padding:6px 10px}
+.m-home{height:22px;display:flex;justify-content:center;align-items:center;flex:none}
+.m-home i{width:134px;height:5px;border-radius:3px;background:#111;display:block}
+.below{margin-top:36px;display:grid;grid-template-columns:1fr 1fr;gap:48px;font-size:13px;line-height:1.55;color:#3a372f}
+.below h4{font:600 11px/1 "DejaVu Sans Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:#6d675c;margin-bottom:10px}
+.below li{margin:0 0 6px 18px}
+.below b{font-weight:600}
+
+/* ---- game engine-driven primitives (all directions) ---- */
+.g{position:relative;overflow:hidden}
+.g .stage{position:relative}
+.g .iso{position:absolute;left:50%;top:50%;transform-style:preserve-3d}
+.g .tile{position:absolute;width:var(--S);height:var(--S);transform-style:preserve-3d;cursor:pointer;outline:none}
+.g .top{position:absolute;inset:0;transform:translateZ(var(--T));transform-style:preserve-3d}
+.g .s1{position:absolute;left:0;top:var(--S);width:var(--S);height:var(--T);transform-origin:0 0;transform:rotateX(90deg)}
+.g .s2{position:absolute;left:var(--S);top:0;width:var(--T);height:var(--S);transform-origin:0 0;transform:rotateY(-90deg)}
+.g .co{position:absolute;left:5px;top:4px;font:500 9px/1 "DejaVu Sans Mono",monospace;letter-spacing:.04em}
+.g .m{display:none;position:absolute;left:50%;top:50%;width:calc(var(--S)*.62);height:calc(var(--S)*.87);margin-left:calc(var(--S)*-.31);margin-top:calc(var(--S)*-.82);transform-origin:50% 95%;transform:var(--bb)}
+.g .m .mdl{width:100%;height:100%;display:block;overflow:visible}
+.g .sh{position:absolute;left:50%;top:50%;width:62%;height:30%;margin:-15% 0 0 -31%;border-radius:50%;opacity:0}
+.g .tile[data-lm="lighthouse"] .m-lighthouse,.g .tile[data-lm="mill"] .m-mill,.g .tile[data-lm="well"] .m-well,.g .tile[data-lm="tower"] .m-tower{display:block}
+.g .tile[data-lm="lighthouse"] .sh,.g .tile[data-lm="mill"] .sh,.g .tile[data-lm="well"] .sh,.g .tile[data-lm="tower"] .sh{opacity:1}
+.g .tile[data-lm=""][data-ghost="lighthouse"] .m-lighthouse,.g .tile[data-lm=""][data-ghost="mill"] .m-mill,.g .tile[data-lm=""][data-ghost="well"] .m-well,.g .tile[data-lm=""][data-ghost="tower"] .m-tower{display:block;opacity:.42}
+.g .tile.drop .m{animation:drop .42s cubic-bezier(.3,1.5,.5,1)}
+@keyframes drop{0%{translate:0 0 48px;opacity:0}60%{opacity:1}100%{translate:0 0}}
+.g .tk{display:flex;flex-direction:column;align-items:center;gap:3px;position:relative}
+.g .tk .tm{display:block}
+.g .tk .tm svg{width:100%;height:100%;display:block}
+.g .tk .tn{text-transform:capitalize}
+.g .notes{list-style:none}
+.g .notes li{display:grid;align-items:baseline}
+.g .notes b{font-weight:700}
+.g .cta:disabled{cursor:not-allowed}
+.g .result{position:absolute;inset:0;display:none;align-items:center;justify-content:center;z-index:20}
+.g[data-result] .result{display:flex}
+.g .rt,.g .rs{display:none}
+.g[data-result="won"] .rt-won,.g[data-result="won"] .rs-won,.g[data-result="lost"] .rt-lost,.g[data-result="lost"] .rs-lost{display:block}
+.g.intro .tile{animation:rise .7s cubic-bezier(.2,.9,.3,1) both;animation-delay:calc(var(--i)*70ms)}
+@keyframes rise{from{translate:0 0 -140px}to{translate:0 0 0}}
+.g.intro .notes li{animation:fadeup .5s ease both;animation-delay:calc(700ms + var(--n,0)*90ms)}
+.g.intro .notes li:nth-child(2){--n:1}.g.intro .notes li:nth-child(3){--n:2}.g.intro .notes li:nth-child(4){--n:3}
+@keyframes fadeup{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+.gb{--ground:#ecebe6;--ink:#141414;--ink2:#77746d;--hi:#ffffff;--lo:rgba(70,62,50,.2);
+ --sans:"Helvetica Neue","Nimbus Sans",Arial,sans-serif;--mono:"DejaVu Sans Mono",Menlo,monospace;
+ --bb:rotateX(-34deg);
+ background:radial-gradient(70% 60% at 22% 30%,#f8f7f3,var(--ground) 70%);color:var(--ink);font-family:var(--sans)}
+.gb::after{content:"";position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");opacity:.13;mix-blend-mode:multiply;pointer-events:none;z-index:30}
+.gb .big{font-weight:500;letter-spacing:-.055em;line-height:.9}
+.gb .big em{font-style:normal;color:var(--ink2)}
+.gb .meta{font:500 11px/1.5 var(--mono);color:var(--ink2);letter-spacing:.04em}
+.gb .meta b{color:var(--ink);font-weight:600}
+.gb .stage{perspective:900px;perspective-origin:30% 0%}
+.gb .slab{position:absolute;left:50%;top:50%;transform-style:preserve-3d;transform:rotateX(34deg)}
+.gb .slab::before{content:"";position:absolute;inset:-18px;border-radius:26px;background:linear-gradient(135deg,#fbfaf7,#e4e1d9);
+ box-shadow:-14px -14px 30px rgba(255,255,255,.9),22px 30px 50px -10px var(--lo),inset 0 0 0 1px rgba(255,255,255,.6)}
+.gb .iso{position:relative;left:0;top:0;margin:0!important;transform:translateZ(1px)}
+.gb .tile .top{border-radius:14px;margin:5px;background:linear-gradient(135deg,#e9e6df,#f6f4ef);
+ box-shadow:inset 5px 6px 10px rgba(70,62,50,.16),inset -5px -6px 10px rgba(255,255,255,.95)}
+.gb .s1,.gb .s2{display:none}
+.gb .co{color:#b9b4aa;left:8px;top:7px}
+.gb .sh{background:radial-gradient(closest-side,rgba(70,62,50,.32),transparent);transform:translate(26%,6%);width:80%}
+.gb .tile[data-lm=lighthouse] .top,.gb .tile[data-lm=mill] .top,.gb .tile[data-lm=well] .top,.gb .tile[data-lm=tower] .top{background:linear-gradient(135deg,#fbfaf7,#ebe8e1);box-shadow:-3px -3px 8px #fff,5px 6px 12px rgba(70,62,50,.14)}
+.gb .tile:hover .top,.gb .tile:focus-visible .top{box-shadow:inset 5px 6px 10px rgba(70,62,50,.22),inset -5px -6px 10px #fff,0 0 0 1.5px var(--ink)}
+.gb .tile[data-ghost] .top{box-shadow:inset 5px 6px 10px rgba(70,62,50,.22),inset -5px -6px 10px #fff,0 0 0 1.5px var(--ink)}
+.gb .m{width:calc(var(--S)*.78);height:calc(var(--S)*1.09);margin-left:calc(var(--S)*-.39);margin-top:calc(var(--S)*-1.0)}
+.gb .m .mdl{filter:drop-shadow(0 0 .6px rgba(60,55,45,.55)) drop-shadow(4px 3px 3px rgba(70,62,50,.18))}
+.gb.intro .tile{animation-name:fall}
+@keyframes fall{from{translate:0 0 120px}to{translate:0 0 0}}
+.gb .tk{border-radius:16px;background:linear-gradient(135deg,#fbfaf7,#ebe8e1);box-shadow:-5px -5px 12px rgba(255,255,255,.9),7px 8px 16px rgba(70,62,50,.14)}
+.gb .tk .tn{font-weight:600;font-size:13px}
+.gb .tk .tc{font:500 10px/1 var(--mono);color:var(--ink2)}
+.gb .tk.done{box-shadow:inset 3px 3px 8px rgba(70,62,50,.14),inset -3px -3px 8px #fff;background:#eceae4}
+.gb .tk.done .tm{opacity:.55}
+.gb .tk.act{background:var(--ink);color:#fff;box-shadow:7px 9px 18px rgba(20,20,20,.25)}
+.gb .tk.act .tc{color:#cfcac0}
+.gb .notes li{grid-template-columns:34px 1fr 54px;gap:6px;border-top:1px solid rgba(20,20,20,.1)}
+.gb .notes .k{font:500 12px/1 var(--mono);color:var(--ink2)}
+.gb .notes .k::after{content:"—";margin-left:4px}
+.gb .notes .st{font:600 9px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;text-align:right;color:#aaa59b}
+.gb .notes li[data-state=holds] .st{color:var(--ink)}
+.gb .notes li[data-state=holds] .st::before{content:"● "}
+.gb .notes li[data-state=broken] .st{color:var(--ink);text-decoration:line-through}
+.gb .notes li[data-state=broken] .tx{text-decoration:line-through;text-decoration-thickness:1px}
+.gb .notes li[data-state=open] .tx{color:var(--ink2)}
+.gb .cta{background:var(--ink);color:#fff;font-weight:600;display:flex;align-items:center;justify-content:center;gap:12px}
+.gb .cta span{font:500 12px/1 var(--mono);opacity:.65}
+.gb .cta:disabled{background:#bdb9b0}
+.gb .result{background:rgba(236,235,230,.9)}
+.gb .rw{text-align:left;max-width:520px}
+.gb .rt{font-size:72px;font-weight:500;letter-spacing:-.055em;line-height:.9}
+.gb .rs{margin:18px 0 22px;font-size:17px;line-height:1.45;color:#3a3833}
+.gb .rb{border-radius:999px;background:var(--ink);color:#fff;padding:13px 22px;font-weight:600;font-size:14px}
+/* desktop */
+.gb.gd{width:756px;height:592px;padding:28px 34px}
+.gb.gd .big{font-size:64px}
+.gb.gd .meta{margin-top:12px}
+.gb.gd .lead{font-size:16px;line-height:1.4;margin-top:8px;max-width:270px}
+.gb.gd .stage{position:absolute;left:340px;top:56px;width:330px;height:330px}
+.gb.gd .tray{position:absolute;left:34px;top:226px;display:grid;grid-template-columns:repeat(2,124px);gap:14px}
+.gb.gd .tk{padding:9px 6px 8px}
+.gb.gd .tk .tm{width:28px;height:40px}
+.gb.gd .notes{position:absolute;left:34px;right:110px;bottom:24px}
+.gb.gd .notes li{font-size:15px;line-height:1.35;padding:7px 0}
+.gb.gd .cta{position:absolute;right:0;top:0;bottom:0;width:64px;flex-direction:column;writing-mode:vertical-rl;font-size:15px;letter-spacing:.04em}
+.gb.gd .cta span{writing-mode:vertical-rl}
+/* mobile */
+.gb.gm{width:390px;height:616px;padding:14px 18px 0}
+.gb.gm .big{font-size:40px}
+.gb.gm .meta{margin-top:6px}
+.gb.gm .stage{height:236px;margin-top:4px}
+.gb.gm .tray{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:2px}
+.gb.gm .tk{padding:7px 2px 7px;border-radius:13px}
+.gb.gm .tk .tm{width:20px;height:28px}
+.gb.gm .tk .tn{font-size:11px}
+.gb.gm .tk .tc{font-size:9px}
+.gb.gm .notes{margin-top:10px}
+.gb.gm .notes li{font-size:13px;line-height:1.3;padding:5px 0;grid-template-columns:26px 1fr 46px}
+.gb.gm .cta{position:absolute;left:0;right:0;bottom:0;height:52px;font-size:15px}
+
+.gb .slab{position:absolute;left:50%;top:50%;transform-style:preserve-3d;transform:rotateX(34deg)}
+.gb .tile.br .top{box-shadow:inset 0 0 0 1.5px var(--ink),-3px -3px 8px #fff,5px 6px 12px rgba(70,62,50,.14)}
+.gb .tile.br .top::after{content:"";position:absolute;left:12%;right:12%;top:50%;height:1.5px;background:var(--ink);transform:rotate(-35deg)}
+.gb .lbl{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink2)}
+.gb .copy{color:#3a3833;line-height:1.4}
+.gb .act{position:absolute;background:var(--ink);color:#fff;font-weight:600;display:flex;align-items:center;justify-content:center;gap:12px;letter-spacing:.02em}
+.gb .act.v{right:0;top:0;bottom:0;width:64px;writing-mode:vertical-rl;font-size:15px}
+.gb .act.h{left:0;right:0;bottom:0;height:52px;font-size:15px}
+.gb .act small{font:500 11px/1 var(--mono);opacity:.65}
+.gb .link{font:600 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink);border-bottom:1px solid var(--ink);padding-bottom:3px;display:inline-block}
+.gb .card{background:linear-gradient(135deg,#fbfaf7,#eeebe4);border-radius:18px;box-shadow:-6px -6px 14px rgba(255,255,255,.9),9px 11px 22px rgba(70,62,50,.14)}
+.gb .hollow{border-radius:14px;background:linear-gradient(135deg,#e9e6df,#f4f2ed);box-shadow:inset 4px 5px 9px rgba(70,62,50,.15),inset -4px -5px 9px #fff}
+.gb .minis{display:flex;gap:12px}
+.gb .mi{display:flex;flex-direction:column;align-items:center;gap:4px;padding:9px 8px 8px;border-radius:14px;background:linear-gradient(135deg,#fbfaf7,#ebe8e1);box-shadow:-4px -4px 10px rgba(255,255,255,.9),6px 7px 14px rgba(70,62,50,.13)}
+.gb .mi .tm{width:22px;height:31px}.gb .mi svg{width:100%;height:100%;display:block}
+.gb .mi .tn{font:600 9px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink2)}
+.gb .stat .k{font:600 9px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink2)}
+.gb .stat .v{font-weight:500;letter-spacing:-.04em;line-height:1;margin-top:8px}
+.gb .stat .v small{font:500 11px/1 var(--mono);letter-spacing:.02em;color:var(--ink2);margin-left:4px}
+.gb .quote{font:500 12px/1.45 var(--mono);color:var(--ink)}
+.gb .pc-cap{display:flex;justify-content:space-between;font:500 10px/1 var(--mono);letter-spacing:.06em;color:var(--ink2)}
+.gb .pc-cap b{color:var(--ink);font-weight:600}
+.gb .days{display:grid;grid-template-columns:repeat(7,1fr)}
+.gb .day{aspect-ratio:1;border-radius:10px;display:flex;align-items:flex-end;justify-content:flex-start;padding:5px 6px;font:500 9px/1 var(--mono);color:var(--ink2)}
+.gb .day.on{background:linear-gradient(135deg,#fbfaf7,#ebe8e1);box-shadow:-3px -3px 8px rgba(255,255,255,.9),5px 6px 12px rgba(70,62,50,.14);color:var(--ink)}
+.gb .day.off{background:linear-gradient(135deg,#e7e4dd,#f2f0eb);box-shadow:inset 3px 4px 7px rgba(70,62,50,.14),inset -3px -4px 7px #fff}
+.gb .day.today{box-shadow:0 0 0 1.5px var(--ink),-3px -3px 8px rgba(255,255,255,.9),5px 6px 12px rgba(70,62,50,.14)}
+.gb .lb{list-style:none}
+.gb .lb li{display:grid;grid-template-columns:28px 1fr 64px 46px;align-items:baseline;border-top:1px solid rgba(20,20,20,.1)}
+.gb .lb li:first-child{border-top:0}
+.gb .lb .rk{font:500 11px/1 var(--mono);color:var(--ink2)}
+.gb .lb .rk::after{content:"—"}
+.gb .lb .t{font:500 12px/1 var(--mono);text-align:right}
+.gb .lb .s{font:500 10px/1 var(--mono);color:var(--ink2);text-align:right}
+.gb .lb li.me{background:var(--ink);color:#fff;border-radius:10px;border-top-color:transparent}
+.gb .lb li.me .rk,.gb .lb li.me .s{color:#cfcac0}
+.gb .lb li.gap{border-top:0;color:var(--ink2);font:500 11px/1 var(--mono);display:block;text-align:center}
+.g.intro .slab .tile{animation:fall .7s cubic-bezier(.2,.9,.3,1) both;animation-delay:calc(var(--i)*70ms)}
+.g.intro .slab .m{animation:drop .42s cubic-bezier(.3,1.5,.5,1) both;animation-delay:calc(600ms + var(--i)*90ms)}
+.g.intro .rise{animation:fadeup .5s ease both;animation-delay:var(--d,0ms)}
+.g.intro .lb li{animation:fadeup .4s ease both}
+.g.intro .lb li:nth-child(2){animation-delay:60ms}.g.intro .lb li:nth-child(3){animation-delay:120ms}.g.intro .lb li:nth-child(4){animation-delay:180ms}.g.intro .lb li:nth-child(5){animation-delay:240ms}.g.intro .lb li:nth-child(6){animation-delay:300ms}.g.intro .lb li:nth-child(7){animation-delay:360ms}
+.g.intro .day{animation:fadeup .35s ease both;animation-delay:calc(var(--k)*35ms)}
+
+.mob .m-feed{height:48px;display:flex;align-items:center;gap:12px;padding:0 14px;border-bottom:1px solid #ececea;flex:none}
+.mob .m-feed i{display:block;height:10px;border-radius:5px;background:#e2e2dd}
+.mob .m-post{padding:10px 0 0;flex:none}
+.mob .m-post .p-head{padding:0 14px 4px}
+.mob .m-post .p-title{padding:0 14px 8px;font-size:15px}
+.mob .m-next{padding:14px;flex:1}
+.desk .next{background:#fff;border-radius:14px;border:1px solid #e3e3df;margin-top:16px;padding:16px;height:200px}
+
+.gb.pd{width:756px;height:430px;padding:30px 34px}
+.gb.pd .big{font-size:58px}
+.gb.pd .copy{font-size:16px;max-width:280px;margin-top:14px}
+.gb.pd .meta{margin-top:12px}
+.gb.pd .minis{position:absolute;left:34px;bottom:30px}
+.gb.pd .stage{position:absolute;left:360px;top:30px;width:300px;height:370px;perspective:900px;perspective-origin:30% 0%}
+.gb.pm{width:390px;height:452px;padding:18px 18px 0}
+.gb.pm .big{font-size:38px}
+.gb.pm .copy{font-size:14px;margin-top:8px;max-width:300px}
+.gb.pm .stage{position:relative;height:200px;perspective:900px;perspective-origin:30% 0%;margin-top:4px}
+.gb.pm .minis{justify-content:center;gap:10px;margin-top:2px}
+.gb.pm .mi{padding:6px 7px 6px}.gb.pm .mi .tm{width:18px;height:25px}
+.gb .signed{position:absolute;inset:0;padding:30px 34px}
+.st-row{display:flex;gap:28px;flex-wrap:wrap;align-items:flex-start;margin-top:36px}
+.st{display:flex;flex-direction:column;gap:10px}
+.st>i{font:500 11px/1.4 "DejaVu Sans Mono",monospace;font-style:normal;color:#6d675c;max-width:520px}
+.panel{border-radius:10px;overflow:hidden;box-shadow:0 20px 40px -24px rgba(0,0,0,.35)}
+</style></head>
+<body><div class="sheet" id="sheet">
+<div class="sh-top"><div>
+<div class="sh-id">Cartographe · G-DESIGN · V2 · style Plâtre (validé) · page 1/4</div>
+<div class="sh-title">Post — dans le feed</div><p class="sh-why"><b>La première impression dans le feed.</b> Le post montre la dalle de plâtre vierge du jour et les quatre miniatures qui attendent, le titre géant « Today’s—fragment » et une seule action noire verticale, « Unroll ». Rien d’autre : pas de règle écrite, la scène suffit.</p>
+<button id="replay">Rejouer l’intro</button></div>
+<div><div class="sw"><div style="background:#ecebe6;color:#141414">ground<br>#ecebe6</div><div style="background:#fbfaf7;color:#141414">plaster<br>#fbfaf7</div><div style="background:#bdb8ad;color:#141414">shade<br>#bdb8ad</div><div style="background:#77746d;color:#fff">grey<br>#77746d</div><div style="background:#141414;color:#fff">ink<br>#141414</div></div>
+<p class="spec">Système : voir <b>G-DESIGN/STYLE.md</b>. Plâtre éclairé à gauche · creux = à jouer, relief = posé · noir = accent unique (repère actif, action unique) · Helvetica/Nimbus 500 −0.055em · mono pour méta et statuts · long tiret « — ».</p></div></div>
+<div class="frames"><div><div class="fr-l">Desktop · 1440 × 900 · post dans le feed (inline)</div><div class="desk"><div class="d-top"><div class="logo"></div><div class="search"></div><div class="me"></div></div><div class="d-body"><div class="d-nav"><div class="bar" style="width:70%"></div><div class="bar" style="width:54%"></div><div class="bar" style="width:82%"></div><div class="bar" style="width:46%"></div><div class="bar" style="width:64%"></div><div class="bar" style="width:58%"></div><div class="bar" style="width:76%"></div><div class="bar" style="width:40%"></div></div><div class="d-col"><div class="post"><div class="p-head"><span class="av" style="background:#141414"></span><b>r/CartographeDaily</b><span>· 2 h</span></div><div class="p-title">Daily map · 12 Dec 2026</div><div class="g gb pd">
+<div class="big rise">Today’s<br><em>—</em>fragment</div>
+<p class="copy rise" style="--d:150ms">Four landmarks, four clues, one blank chart a day. Hi mapmaker.</p>
+<div class="meta rise" style="--d:250ms"><b>12.12.2026</b> · 4 notes · same map for everyone</div>
+<div class="stage"><div class="slab" style="width:240px;height:240px;margin:-120px 0 0 -120px"><div class="iso" style="--S:60px;--T:0px;width:240px;height:240px"><div class="tile" data-lm="" style="left:0px;top:0px;--i:0"><div class="top"><span class="co">1·1</span><i class="sh"></i></div></div><div class="tile" data-lm="" style="left:60px;top:0px;--i:1"><div class="top"><span class="co">1·2</span><i class="sh"></i></div></div><div class="tile" data-lm="" style="left:120px;top:0px;--i:2"><div class="top"><span class="co">1·3</span><i class="sh"></i></div></div><div class="tile" data-lm="" style="left:180px;top:0px;--i:3"><div class="top"><span class="co">1·4</span><i class="sh"></i></div></div><div class="tile" data-lm="" style="left:0px;top:60px;--i:1"><div class="top"><span class="co">2·1</span><i class="sh"></i></div></div><div class="tile" data-lm="" style="left:60px;top:60px;--i:2"><div class="top"><span class="co">2·2</span><i class="sh"></i></div></div><div class="tile" data-lm="" style="left:120px;top:60px;--i:3"><div class="top"><span class="co">2·3</span><i class="sh"></i></div></div><div class="tile" data-lm="" style="left:180px;top:60px;--i:4"><div class="top"><span class="co">2·4</span><i class="sh"></i></div></div><div class="tile" data-lm="" style="left:0px;top:120px;--i:2"><div class="top"><span class="co">3·1</span><i class="sh"></i></div></div><div class="tile" data-lm="" style="left:60px;top:120px;--i:3"><div class="top"><span class="co">3·2</span><i class="sh"></i></div></div><div class="tile" data-lm="" style="left:120px;top:120px;--i:4"><div class="top"><span class="co">3·3</span><i class="sh"></i></div></div><div class="tile" data-lm="" style="left:180px;top:120px;--i:5"><div class="top"><span class="co">3·4</span><i class="sh"></i></div></div><div class="tile" data-lm="" style="left:0px;top:180px;--i:3"><div class="top"><span class="co">4·1</span><i class="sh"></i></div></div><div class="tile" data-lm="" style="left:60px;top:180px;--i:4"><div class="top"><span class="co">4·2</span><i class="sh"></i></div></div><div class="tile" data-lm="" style="left:120px;top:180px;--i:5"><div class="top"><span class="co">4·3</span><i class="sh"></i></div></div><div class="tile" data-lm="" style="left:180px;top:180px;--i:6"><div class="top"><span class="co">4·4</span><i class="sh"></i></div></div></div></div></div>
+<div class="minis"><span class="mi"><span class="tm"><svg viewBox="0 0 40 56" class="mdl"><path d="M13 54L16.5 20H20V54Z" fill="#ffffff"/><path d="M20 54V20H23.5L27 54Z" fill="#9d978a"/><path d="M14.4 40.5h11.2l.5 4.6H13.9z" fill="#cfcabf" opacity=".55"/><path d="M15.8 28h8.4l.4 4.2h-9.2z" fill="#cfcabf" opacity=".55"/><rect x="14" y="17" width="12" height="3.2" fill="#cfcabf"/><rect x="15.6" y="9.5" width="8.8" height="7.5" fill="#141414"/><path d="M14.6 9.6L20 3.4V9.6Z" fill="#ffffff"/><path d="M20 3.4L25.4 9.6H20Z" fill="#9d978a"/></svg></span><span class="tn">lighthouse</span></span><span class="mi"><span class="tm"><svg viewBox="0 0 40 56" class="mdl"><path d="M12.5 54L15.6 25H20V54Z" fill="#ffffff"/><path d="M20 54V25H24.4L27.5 54Z" fill="#9d978a"/><path d="M14.4 25L20 18.5V25Z" fill="#ffffff"/><path d="M20 18.5L25.6 25H20Z" fill="#9d978a"/><rect x="18.3" y="44" width="3.4" height="10" rx="1.7" fill="#cfcabf"/><g transform="rotate(18 20 21)"><path d="M18.9 21V3.2h2.2V21z" fill="#cfcabf"/><path d="M21.1 5h4.2v12.5h-4.2z" fill="#ffffff" opacity=".9"/></g><g transform="rotate(108 20 21)"><path d="M18.9 21V3.2h2.2V21z" fill="#cfcabf"/><path d="M21.1 5h4.2v12.5h-4.2z" fill="#ffffff" opacity=".9"/></g><g transform="rotate(198 20 21)"><path d="M18.9 21V3.2h2.2V21z" fill="#cfcabf"/><path d="M21.1 5h4.2v12.5h-4.2z" fill="#ffffff" opacity=".9"/></g><g transform="rotate(288 20 21)"><path d="M18.9 21V3.2h2.2V21z" fill="#cfcabf"/><path d="M21.1 5h4.2v12.5h-4.2z" fill="#ffffff" opacity=".9"/></g><circle cx="20" cy="21" r="1.8" fill="#9d978a"/></svg></span><span class="tn">mill</span></span><span class="mi"><span class="tm"><svg viewBox="0 0 40 56" class="mdl"><path d="M8.5 22L20 15V22Z" fill="#ffffff"/><path d="M20 15L31.5 22H20Z" fill="#9d978a"/><rect x="10.2" y="22" width="2" height="19" fill="#ffffff"/><rect x="27.8" y="22" width="2" height="19" fill="#9d978a"/><path d="M20 22v9" stroke="#cfcabf" stroke-width=".9"/><rect x="18.4" y="30.5" width="3.2" height="3" fill="#cfcabf"/><path d="M8.5 41.5v8.5c0 2.2 5.1 4 11.5 4V41.5Z" fill="#ffffff"/><path d="M20 41.5V54c6.4 0 11.5-1.8 11.5-4v-8.5Z" fill="#9d978a"/><ellipse cx="20" cy="41.5" rx="11.5" ry="3.6" fill="#cfcabf"/><ellipse cx="20" cy="41.6" rx="8.6" ry="2.4" fill="#9d978a" opacity=".85"/></svg></span><span class="tn">well</span></span><span class="mi"><span class="tm"><svg viewBox="0 0 40 56" class="mdl"><path d="M11 54V15.5H20V54Z" fill="#ffffff"/><path d="M20 54V15.5H29V54Z" fill="#9d978a"/><rect x="11" y="11" width="3.4" height="4.5" fill="#ffffff"/><rect x="16.6" y="11" width="3.4" height="4.5" fill="#ffffff"/><rect x="22.2" y="11" width="3.4" height="4.5" fill="#9d978a"/><rect x="27.6" y="11" width="3.4" height="4.5" fill="#9d978a"/><rect x="18.4" y="23" width="3.2" height="6" rx="1.6" fill="#141414"/><path d="M16.6 54v-6.4a3.4 3.4 0 0 1 6.8 0V54z" fill="#cfcabf"/></svg></span><span class="tn">tower</span></span></div>
+<button class="act v">Unroll</button></div><div class="p-act"><span><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M8 2.5l5 6H10v5H6v-5H3z"/></svg> 1.4k <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M8 13.5l5-6H10v-5H6v5H3z"/></svg></span><span><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M2.5 3.5h11v7.5H7l-3 2.5V11H2.5z"/></svg> 318</span><span><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5v8M5 5.5l3-3 3 3M3 9v4.5h10V9"/></svg> Share</span></div></div><div class="next"><div class="bar" style="width:30%"></div><div class="bar" style="width:80%"></div><div class="bar" style="width:66%"></div></div></div><div class="d-side"><div class="card"><div class="bar" style="width:60%"></div><div class="bar" style="width:90%"></div><div class="bar" style="width:84%"></div><div class="bar" style="width:72%"></div><div class="bar" style="width:40%"></div></div></div></div></div></div><div><div class="fr-l">Mobile · 390 × 844 · feed (inline)</div><div class="mob"><div class="m-status"><span>9:41</span><i></i></div><div class="m-feed"><i style="width:26px;height:26px;border-radius:50%"></i><i style="width:90px"></i><i style="width:60px;margin-left:auto"></i></div><div class="m-post"><div class="p-head"><span class="av" style="background:#141414"></span><b>r/CartographeDaily</b><span>· 2 h</span></div><div class="p-title">Daily map · 12 Dec 2026</div><div class="g gb pm">
+<div class="big rise">Today’s<em>—</em>fragment</div>
+<p class="copy rise" style="--d:150ms">Four landmarks, four clues, one blank chart a day. Hi mapmaker.</p>
+<div class="stage"><div class="slab" style="width:176px;height:176px;margin:-88px 0 0 -88px"><div class="iso" style="--S:44px;--T:0px;width:176px;height:176px"><div class="tile" data-lm="" style="left:0px;top:0px;--i:0"><div class="top"><i class="sh"></i></div></div><div class="tile" data-lm="" style="left:44px;top:0px;--i:1"><div class="top"><i class="sh"></i></div></div><div class="tile" data-lm="" style="left:88px;top:0px;--i:2"><div class="top"><i class="sh"></i></div></div><div class="tile" data-lm="" style="left:132px;top:0px;--i:3"><div class="top"><i class="sh"></i></div></div><div class="tile" data-lm="" style="left:0px;top:44px;--i:1"><div class="top"><i class="sh"></i></div></div><div class="tile" data-lm="" style="left:44px;top:44px;--i:2"><div class="top"><i class="sh"></i></div></div><div class="tile" data-lm="" style="left:88px;top:44px;--i:3"><div class="top"><i class="sh"></i></div></div><div class="tile" data-lm="" style="left:132px;top:44px;--i:4"><div class="top"><i class="sh"></i></div></div><div class="tile" data-lm="" style="left:0px;top:88px;--i:2"><div class="top"><i class="sh"></i></div></div><div class="tile" data-lm="" style="left:44px;top:88px;--i:3"><div class="top"><i class="sh"></i></div></div><div class="tile" data-lm="" style="left:88px;top:88px;--i:4"><div class="top"><i class="sh"></i></div></div><div class="tile" data-lm="" style="left:132px;top:88px;--i:5"><div class="top"><i class="sh"></i></div></div><div class="tile" data-lm="" style="left:0px;top:132px;--i:3"><div class="top"><i class="sh"></i></div></div><div class="tile" data-lm="" style="left:44px;top:132px;--i:4"><div class="top"><i class="sh"></i></div></div><div class="tile" data-lm="" style="left:88px;top:132px;--i:5"><div class="top"><i class="sh"></i></div></div><div class="tile" data-lm="" style="left:132px;top:132px;--i:6"><div class="top"><i class="sh"></i></div></div></div></div></div>
+<div class="minis"><span class="mi"><span class="tm"><svg viewBox="0 0 40 56" class="mdl"><path d="M13 54L16.5 20H20V54Z" fill="#ffffff"/><path d="M20 54V20H23.5L27 54Z" fill="#9d978a"/><path d="M14.4 40.5h11.2l.5 4.6H13.9z" fill="#cfcabf" opacity=".55"/><path d="M15.8 28h8.4l.4 4.2h-9.2z" fill="#cfcabf" opacity=".55"/><rect x="14" y="17" width="12" height="3.2" fill="#cfcabf"/><rect x="15.6" y="9.5" width="8.8" height="7.5" fill="#141414"/><path d="M14.6 9.6L20 3.4V9.6Z" fill="#ffffff"/><path d="M20 3.4L25.4 9.6H20Z" fill="#9d978a"/></svg></span><span class="tn">lighthouse</span></span><span class="mi"><span class="tm"><svg viewBox="0 0 40 56" class="mdl"><path d="M12.5 54L15.6 25H20V54Z" fill="#ffffff"/><path d="M20 54V25H24.4L27.5 54Z" fill="#9d978a"/><path d="M14.4 25L20 18.5V25Z" fill="#ffffff"/><path d="M20 18.5L25.6 25H20Z" fill="#9d978a"/><rect x="18.3" y="44" width="3.4" height="10" rx="1.7" fill="#cfcabf"/><g transform="rotate(18 20 21)"><path d="M18.9 21V3.2h2.2V21z" fill="#cfcabf"/><path d="M21.1 5h4.2v12.5h-4.2z" fill="#ffffff" opacity=".9"/></g><g transform="rotate(108 20 21)"><path d="M18.9 21V3.2h2.2V21z" fill="#cfcabf"/><path d="M21.1 5h4.2v12.5h-4.2z" fill="#ffffff" opacity=".9"/></g><g transform="rotate(198 20 21)"><path d="M18.9 21V3.2h2.2V21z" fill="#cfcabf"/><path d="M21.1 5h4.2v12.5h-4.2z" fill="#ffffff" opacity=".9"/></g><g transform="rotate(288 20 21)"><path d="M18.9 21V3.2h2.2V21z" fill="#cfcabf"/><path d="M21.1 5h4.2v12.5h-4.2z" fill="#ffffff" opacity=".9"/></g><circle cx="20" cy="21" r="1.8" fill="#9d978a"/></svg></span><span class="tn">mill</span></span><span class="mi"><span class="tm"><svg viewBox="0 0 40 56" class="mdl"><path d="M8.5 22L20 15V22Z" fill="#ffffff"/><path d="M20 15L31.5 22H20Z" fill="#9d978a"/><rect x="10.2" y="22" width="2" height="19" fill="#ffffff"/><rect x="27.8" y="22" width="2" height="19" fill="#9d978a"/><path d="M20 22v9" stroke="#cfcabf" stroke-width=".9"/><rect x="18.4" y="30.5" width="3.2" height="3" fill="#cfcabf"/><path d="M8.5 41.5v8.5c0 2.2 5.1 4 11.5 4V41.5Z" fill="#ffffff"/><path d="M20 41.5V54c6.4 0 11.5-1.8 11.5-4v-8.5Z" fill="#9d978a"/><ellipse cx="20" cy="41.5" rx="11.5" ry="3.6" fill="#cfcabf"/><ellipse cx="20" cy="41.6" rx="8.6" ry="2.4" fill="#9d978a" opacity=".85"/></svg></span><span class="tn">well</span></span><span class="mi"><span class="tm"><svg viewBox="0 0 40 56" class="mdl"><path d="M11 54V15.5H20V54Z" fill="#ffffff"/><path d="M20 54V15.5H29V54Z" fill="#9d978a"/><rect x="11" y="11" width="3.4" height="4.5" fill="#ffffff"/><rect x="16.6" y="11" width="3.4" height="4.5" fill="#ffffff"/><rect x="22.2" y="11" width="3.4" height="4.5" fill="#9d978a"/><rect x="27.6" y="11" width="3.4" height="4.5" fill="#9d978a"/><rect x="18.4" y="23" width="3.2" height="6" rx="1.6" fill="#141414"/><path d="M16.6 54v-6.4a3.4 3.4 0 0 1 6.8 0V54z" fill="#cfcabf"/></svg></span><span class="tn">tower</span></span></div>
+<button class="act h">Unroll</button></div><div class="p-act"><span><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M8 2.5l5 6H10v5H6v-5H3z"/></svg> 1.4k <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M8 13.5l5-6H10v-5H6v5H3z"/></svg></span><span><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M2.5 3.5h11v7.5H7l-3 2.5V11H2.5z"/></svg> 318</span><span><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5v8M5 5.5l3-3 3 3M3 9v4.5h10V9"/></svg></span></div></div><div class="m-next"><div class="bar" style="width:40%"></div><div class="bar" style="width:86%"></div><div class="bar" style="width:70%"></div></div><div class="m-home"><i></i></div></div></div></div>
+<div class="st-row">
+<div class="st"><div class="panel"><div class="g gb pd">
+<div class="big">Map<em>—</em>signed</div>
+<p class="copy">You charted today’s fragment. A new territory tomorrow.</p>
+<div class="meta"><b>12.12.2026</b> · charted in <b>01:58</b> · streak <b>7</b></div>
+<div class="meta" style="margin-top:4px">next map in <b data-next>--:--:--</b></div>
+<div class="stage"><div class="slab" style="width:240px;height:240px;margin:-120px 0 0 -120px"><div class="iso" style="--S:60px;--T:0px;width:240px;height:240px"><div class="tile" data-lm="" style="left:0px;top:0px;--i:0"><div class="top"><span class="co">1·1</span><i class="sh"></i></div></div><div class="tile" data-lm="" style="left:60px;top:0px;--i:1"><div class="top"><span class="co">1·2</span><i class="sh"></i></div></div><div class="tile" data-lm="" style="left:120px;top:0px;--i:2"><div class="top"><span class="co">1·3</span><i class="sh"></i></div></div><div class="tile" data-lm="" style="left:180px;top:0px;--i:3"><div class="top"><span class="co">1·4</span><i class="sh"></i></div></div><div class="tile" data-lm="" style="left:0px;top:60px;--i:1"><div class="top"><span class="co">2·1</span><i class="sh"></i></div></div><div class="tile" data-lm="" style="left:60px;top:60px;--i:2"><div class="top"><span class="co">2·2</span><i class="sh"></i></div></div><div class="tile" data-lm="" style="left:120px;top:60px;--i:3"><div class="top"><span class="co">2·3</span><i class="sh"></i></div></div><div class="tile" data-lm="" style="left:180px;top:60px;--i:4"><div class="top"><span class="co">2·4</span><i class="sh"></i></div></div><div class="tile" data-lm="well" style="left:0px;top:120px;--i:2"><div class="top"><span class="co">3·1</span><i class="sh"></i><span class="m m-well"><svg viewBox="0 0 40 56" class="mdl"><path d="M8.5 22L20 15V22Z" fill="#ffffff"/><path d="M20 15L31.5 22H20Z" fill="#9d978a"/><rect x="10.2" y="22" width="2" height="19" fill="#ffffff"/><rect x="27.8" y="22" width="2" height="19" fill="#9d978a"/><path d="M20 22v9" stroke="#cfcabf" stroke-width=".9"/><rect x="18.4" y="30.5" width="3.2" height="3" fill="#cfcabf"/><path d="M8.5 41.5v8.5c0 2.2 5.1 4 11.5 4V41.5Z" fill="#ffffff"/><path d="M20 41.5V54c6.4 0 11.5-1.8 11.5-4v-8.5Z" fill="#9d978a"/><ellipse cx="20" cy="41.5" rx="11.5" ry="3.6" fill="#cfcabf"/><ellipse cx="20" cy="41.6" rx="8.6" ry="2.4" fill="#9d978a" opacity=".85"/></svg></span></div></div><div class="tile" data-lm="" style="left:60px;top:120px;--i:3"><div class="top"><span class="co">3·2</span><i class="sh"></i></div></div><div class="tile" data-lm="mill" style="left:120px;top:120px;--i:4"><div class="top"><span class="co">3·3</span><i class="sh"></i><span class="m m-mill"><svg viewBox="0 0 40 56" class="mdl"><path d="M12.5 54L15.6 25H20V54Z" fill="#ffffff"/><path d="M20 54V25H24.4L27.5 54Z" fill="#9d978a"/><path d="M14.4 25L20 18.5V25Z" fill="#ffffff"/><path d="M20 18.5L25.6 25H20Z" fill="#9d978a"/><rect x="18.3" y="44" width="3.4" height="10" rx="1.7" fill="#cfcabf"/><g transform="rotate(18 20 21)"><path d="M18.9 21V3.2h2.2V21z" fill="#cfcabf"/><path d="M21.1 5h4.2v12.5h-4.2z" fill="#ffffff" opacity=".9"/></g><g transform="rotate(108 20 21)"><path d="M18.9 21V3.2h2.2V21z" fill="#cfcabf"/><path d="M21.1 5h4.2v12.5h-4.2z" fill="#ffffff" opacity=".9"/></g><g transform="rotate(198 20 21)"><path d="M18.9 21V3.2h2.2V21z" fill="#cfcabf"/><path d="M21.1 5h4.2v12.5h-4.2z" fill="#ffffff" opacity=".9"/></g><g transform="rotate(288 20 21)"><path d="M18.9 21V3.2h2.2V21z" fill="#cfcabf"/><path d="M21.1 5h4.2v12.5h-4.2z" fill="#ffffff" opacity=".9"/></g><circle cx="20" cy="21" r="1.8" fill="#9d978a"/></svg></span></div></div><div class="tile" data-lm="tower" style="left:180px;top:120px;--i:5"><div class="top"><span class="co">3·4</span><i class="sh"></i><span class="m m-tower"><svg viewBox="0 0 40 56" class="mdl"><path d="M11 54V15.5H20V54Z" fill="#ffffff"/><path d="M20 54V15.5H29V54Z" fill="#9d978a"/><rect x="11" y="11" width="3.4" height="4.5" fill="#ffffff"/><rect x="16.6" y="11" width="3.4" height="4.5" fill="#ffffff"/><rect x="22.2" y="11" width="3.4" height="4.5" fill="#9d978a"/><rect x="27.6" y="11" width="3.4" height="4.5" fill="#9d978a"/><rect x="18.4" y="23" width="3.2" height="6" rx="1.6" fill="#141414"/><path d="M16.6 54v-6.4a3.4 3.4 0 0 1 6.8 0V54z" fill="#cfcabf"/></svg></span></div></div><div class="tile" data-lm="" style="left:0px;top:180px;--i:3"><div class="top"><span class="co">4·1</span><i class="sh"></i></div></div><div class="tile" data-lm="" style="left:60px;top:180px;--i:4"><div class="top"><span class="co">4·2</span><i class="sh"></i></div></div><div class="tile" data-lm="" style="left:120px;top:180px;--i:5"><div class="top"><span class="co">4·3</span><i class="sh"></i></div></div><div class="tile" data-lm="lighthouse" style="left:180px;top:180px;--i:6"><div class="top"><span class="co">4·4</span><i class="sh"></i><span class="m m-lighthouse"><svg viewBox="0 0 40 56" class="mdl"><path d="M13 54L16.5 20H20V54Z" fill="#ffffff"/><path d="M20 54V20H23.5L27 54Z" fill="#9d978a"/><path d="M14.4 40.5h11.2l.5 4.6H13.9z" fill="#cfcabf" opacity=".55"/><path d="M15.8 28h8.4l.4 4.2h-9.2z" fill="#cfcabf" opacity=".55"/><rect x="14" y="17" width="12" height="3.2" fill="#cfcabf"/><rect x="15.6" y="9.5" width="8.8" height="7.5" fill="#141414"/><path d="M14.6 9.6L20 3.4V9.6Z" fill="#ffffff"/><path d="M20 3.4L25.4 9.6H20Z" fill="#9d978a"/></svg></span></div></div></div></div></div>
+<button class="act v">Open my map</button></div></div><i>État « déjà signée aujourd’hui » (<code>solvedToday</code> existe dans <code>/api/init</code>) · la carte du jour remplie, l’heure de la prochaine carte (minuit UTC, calculé côté client) et l’action devient « Open my map » → carte de fin.</i></div>
+<div class="st"><div class="panel" style="width:378px;height:215px;overflow:hidden"><div style="transform:scale(.5);transform-origin:0 0"><div class="g gb pd" style="display:flex;align-items:center;justify-content:center;flex-direction:column;gap:18px">
+<div class="hollow" style="width:120px;height:120px;border-radius:26px"></div><div class="meta">Unrolling the map…</div></div></div></div><i>Chargement (texte du code « Unrolling the map… ») · une alvéole vide qui respire (pas de spinner).</i></div>
+</div>
+<div class="below"><div><h4>Rôle de la page</h4><ul>
+<li>C’est ce qu’on voit <b>dans le feed</b>, avant d’ouvrir le jeu (splash inline de Devvit, <code>splash.tsx</code>) : en 5 secondes on lit « une carte vierge par jour, 4 repères ».</li>
+<li>La dalle est vide et les 4 miniatures attendent à côté : la règle est montrée, pas expliquée.</li>
+<li>Une seule action, « Unroll » (texte du code) → ouvre le mode étendu (<code>requestExpandedMode</code>).</li></ul></div>
+<div><h4>Données</h4><ul>
+<li>Nom du joueur : <code>context.username</code> (« Hi mapmaker » = exemple). Date : jour UTC.</li>
+<li>La série et l’état « signé » demandent un appel à <code>/api/init</code> depuis le splash : aujourd’hui le splash n’en fait pas. <b>À confirmer.</b></li></ul></div></div>
+</div><script>
+(function(){
+function intro(){[].forEach.call(document.querySelectorAll('.g'),function(g){g.classList.remove('intro');void g.offsetWidth;g.classList.add('intro')})}
+var b=document.getElementById('replay');if(b)b.addEventListener('click',intro);intro();
+function tick(){var n=new Date(),m=Date.UTC(n.getUTCFullYear(),n.getUTCMonth(),n.getUTCDate()+1)-n.getTime(),s=Math.floor(m/1000);
+ var t=[Math.floor(s/3600),Math.floor(s/60)%60,s%60].map(function(x){return String(x).padStart(2,'0')}).join(':');
+ [].forEach.call(document.querySelectorAll('[data-next]'),function(e){e.textContent=t})}
+tick();setInterval(tick,1000);
+function fit(){var sh=document.getElementById('sheet');var z=Math.min(1,window.innerWidth/sh.offsetWidth);sh.style.transform='scale('+z+')';document.body.style.height=(sh.offsetHeight*z)+'px';}
+window.addEventListener('resize',fit);fit();
+})();
+</script></body></html>

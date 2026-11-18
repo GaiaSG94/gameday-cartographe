@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cartographe · V1 · Cyanotype</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#d9d6cf}
+body{overflow-x:hidden;-webkit-font-smoothing:antialiased}
+.sheet{width:1980px;padding:40px 48px 56px;transform-origin:0 0;font-family:"Helvetica Neue",Arial,"Liberation Sans",sans-serif;color:#1c1a17}
+.sh-top{display:grid;grid-template-columns:1fr 520px;gap:48px;margin-bottom:30px;align-items:end}
+.sh-id{font:600 11px/1 "DejaVu Sans Mono",Menlo,monospace;letter-spacing:.14em;text-transform:uppercase;color:#6d675c}
+.sh-title{font-size:44px;font-weight:700;letter-spacing:-.02em;margin:12px 0 10px}
+.sh-why{font-size:15px;line-height:1.5;max-width:860px;color:#3a372f}
+.sh-why b{font-weight:600}
+.sw{display:flex;gap:10px;margin-bottom:14px}
+.sw div{flex:1;height:58px;border-radius:6px;padding:8px;display:flex;align-items:flex-end;font:600 10px/1.2 "DejaVu Sans Mono",monospace;letter-spacing:.06em;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)}
+.spec{font-size:13px;color:#3a372f;line-height:1.5}
+.frames{display:flex;gap:48px;align-items:flex-start}
+.fr-l{font:600 11px/1 "DejaVu Sans Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:#6d675c;margin-bottom:10px}
+/* desktop feed chrome — neutral on purpose: no platform branding */
+.desk{width:1440px;height:900px;background:#f4f4f2;border-radius:10px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(0,0,0,.35);display:flex;flex-direction:column}
+.d-top{height:56px;background:#fff;border-bottom:1px solid #e3e3df;display:flex;align-items:center;padding:0 24px;gap:20px;flex:none}
+.d-top .logo{width:32px;height:32px;border-radius:50%;background:#d8d8d3}
+.d-top .search{flex:none;width:560px;height:38px;border-radius:19px;background:#efefeb;margin:0 auto}
+.d-top .me{width:32px;height:32px;border-radius:50%;background:#cfcfc9}
+.d-body{flex:1;display:grid;grid-template-columns:232px 1fr 312px;gap:24px;padding:20px 24px 0;overflow:hidden}
+.d-nav{border-right:1px solid #e3e3df;padding-right:16px}
+.bar{height:10px;border-radius:5px;background:#e2e2dd;margin:14px 0}
+.d-col{width:756px;justify-self:center}
+.post{background:#fff;border-radius:14px;border:1px solid #e3e3df;overflow:hidden}
+.p-head{display:flex;align-items:center;gap:10px;padding:12px 16px 4px;font-size:12px;color:#5f5f5a}
+.p-head .av{width:24px;height:24px;border-radius:50%;flex:none}
+.p-head b{color:#1c1c1a;font-weight:600}
+.p-title{padding:2px 16px 10px;font-size:18px;font-weight:600;color:#1c1c1a;letter-spacing:-.01em}
+.p-act{display:flex;gap:10px;padding:10px 16px 12px;font-size:12px;font-weight:600;color:#4c4c48}
+.p-act span{display:inline-flex;align-items:center;gap:6px;background:#f0f0ec;border-radius:16px;padding:7px 12px}
+.d-side .card{background:#fff;border:1px solid #e3e3df;border-radius:14px;padding:16px}
+/* mobile chrome */
+.mob{width:390px;height:844px;background:#fff;border-radius:44px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(0,0,0,.4);outline:10px solid #111;display:flex;flex-direction:column;flex:none}
+.m-status{height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 30px;font:600 14px/1 "Helvetica Neue",Arial,sans-serif;color:#111;flex:none}
+.m-status i{width:70px;height:10px;border-radius:5px;background:#111;display:block}
+.m-bar{height:48px;display:flex;align-items:center;gap:10px;padding:0 14px;font-size:14px;font-weight:600;color:#1c1c1a;border-bottom:1px solid #ececea;flex:none}
+.m-bar .av{width:24px;height:24px;border-radius:50%}
+.m-meta{padding:8px 14px 6px;flex:none}
+.m-meta .t{font-size:15px;font-weight:600;color:#1c1c1a}
+.m-meta .s{font-size:11px;color:#6b6b66;margin-top:2px}
+.m-view{flex:none;height:616px;overflow:hidden;position:relative}
+.m-act{flex:1;display:flex;gap:8px;align-items:center;padding:0 14px;font-size:12px;font-weight:600;color:#4c4c48}
+.m-act span{display:inline-flex;align-items:center;gap:5px;background:#f0f0ec;border-radius:16px;padding:6px 10px}
+.m-home{height:22px;display:flex;justify-content:center;align-items:center;flex:none}
+.m-home i{width:134px;height:5px;border-radius:3px;background:#111;display:block}
+/* states strip */
+.states{margin-top:40px}
+.st-row{display:flex;gap:22px;flex-wrap:wrap;align-items:flex-start}
+.st{display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+.st>i{font:500 11px/1.3 "DejaVu Sans Mono",monospace;font-style:normal;color:#6d675c;max-width:220px}
+.notes-q{margin-top:32px;font-size:13px;color:#3a372f;line-height:1.55;max-width:1200px}
+.notes-q b{font-weight:600}
+
+.g{--ground:#173a63;--ground2:#1c4471;--line:#efe9da;--line2:rgba(239,233,218,.55);--line3:rgba(239,233,218,.22);--amber:#f0a83c;
+  --cond:"Arial Narrow","Liberation Sans Narrow","Nimbus Sans Narrow","Helvetica Neue",Arial,sans-serif;--mono:"DejaVu Sans Mono",Menlo,"Liberation Mono",monospace;
+  --serif:"C059","Century Schoolbook","New Century Schoolbook",Georgia,serif;
+  background:var(--ground);color:var(--line);font-family:var(--cond);position:relative;overflow:hidden;
+  background-image:radial-gradient(90% 70% at 50% 45%,rgba(40,90,150,.55),rgba(23,58,99,0) 70%),radial-gradient(140% 120% at 50% 50%,rgba(0,0,0,0) 60%,rgba(5,20,40,.45)),repeating-linear-gradient(0deg,rgba(255,255,255,.018) 0 1px,transparent 1px 3px)}
+.g .bigrose{position:absolute;color:var(--line3);opacity:.5;pointer-events:none}
+.g .top{display:flex;align-items:flex-end;justify-content:space-between}
+.g .wm{font-weight:700;text-transform:uppercase;letter-spacing:.32em}
+.g .plate{font:500 11px/1.4 var(--mono);color:var(--line2);letter-spacing:.08em;text-align:right}
+.g .plate b{color:var(--line);font-weight:600}
+.g .rule{font-family:var(--serif);font-style:italic;color:var(--line)}
+.g .lms{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line2);border-bottom:1px solid var(--line2)}
+.g .lm{display:flex;align-items:center;gap:10px;border-right:1px solid var(--line3);color:var(--line2)}
+.g .lm:last-child{border-right:0}
+.g .lm .nm{font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--line)}
+.g .lm .co{font:500 10px/1 var(--mono);color:var(--line2);letter-spacing:.06em;margin-top:3px}
+.g .lm.act{background:var(--amber);color:#173a63}
+.g .lm.act .nm,.g .lm.act .co{color:#173a63}
+.g .grid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(4,1fr);gap:0;position:relative;border:1.5px solid var(--line)}
+.g .cell{border:.5px solid var(--line3);display:flex;align-items:center;justify-content:center;color:var(--line);position:relative}
+.g .cell .ic{width:56%;height:56%}
+.g .cell .cc{position:absolute;left:5px;top:4px;font:500 8.5px/1 var(--mono);color:var(--line2)}
+.g .cell.on{background:rgba(239,233,218,.07)}
+.g .cell.tgt{box-shadow:inset 0 0 0 2px var(--amber)}
+.g .cell.tgt .ic{color:var(--amber);opacity:.55}
+.g .nb{border:1px solid var(--line2);background:rgba(23,58,99,.92)}
+.g .nb-h{font-weight:700;text-transform:uppercase;letter-spacing:.22em;color:var(--line2);border-bottom:1px solid var(--line3)}
+.g .nn{display:flex;gap:12px;border-bottom:1px solid var(--line3);font-family:var(--serif);color:var(--line)}
+.g .nn:last-child{border-bottom:0}
+.g .nn .k{font:500 11px/1.6 var(--mono);color:var(--line2);flex:none}
+.g .nn b{font-weight:700;font-style:normal}
+.g .nn.open{color:var(--line2)}
+.g .nn.holds .k{color:var(--amber)}
+.g .btn{display:flex;align-items:center;justify-content:center;font-weight:700;text-transform:uppercase;letter-spacing:.26em;border:1.5px solid var(--line2);color:var(--line2)}
+.g .btn.go{background:var(--amber);border-color:var(--amber);color:#173a63}
+.g .seal{display:inline-flex;align-items:center;justify-content:center;width:120px;height:120px;border-radius:50%;border:1.5px solid var(--line);outline:1px solid var(--line2);outline-offset:4px;font-weight:700;text-transform:uppercase;letter-spacing:.2em;font-size:15px;text-align:center;line-height:1.3}
+/* desktop */
+.gd{width:756px;height:592px;padding:22px 30px 24px}
+.gd .bigrose{width:520px;height:520px;right:-120px;top:60px}
+.gd .wm{font-size:17px}
+.gd .rule{font-size:17px;margin:12px 0 14px}
+.gd .lm{padding:10px 14px}
+.gd .lm .ic{width:30px;height:30px}
+.gd .lm .nm{font-size:13px}
+.gd .body{display:grid;grid-template-columns:330px 1fr;gap:34px;margin-top:20px}
+.gd .grid{width:330px;height:330px}
+.gd .nb-h{font-size:11px;padding:10px 14px}
+.gd .nn{font-size:15px;line-height:1.38;padding:10px 14px}
+.gd .btn{height:48px;font-size:13px;margin-top:16px}
+/* mobile */
+.gm{width:390px;height:616px;padding:14px 18px 14px;display:flex;flex-direction:column}
+.gm .bigrose{width:360px;height:360px;right:-150px;top:150px}
+.gm .wm{font-size:14px}
+.gm .plate{font-size:10px}
+.gm .rule{font-size:14px;margin:7px 0 9px}
+.gm .lms{grid-template-columns:repeat(4,1fr)}
+.gm .lm{flex-direction:column;gap:3px;padding:6px 2px;text-align:center}
+.gm .lm .ic{width:22px;height:22px}
+.gm .lm .nm{font-size:10px;letter-spacing:.08em}
+.gm .lm .co{font-size:9px;margin-top:0}
+.gm .grid{width:282px;height:282px;margin:12px auto 10px}
+.gm .nb-h{display:none}
+.gm .nn{font-size:13px;line-height:1.3;padding:5px 10px;gap:8px}
+.gm .btn{height:44px;font-size:12px;margin-top:auto}
+</style></head>
+<body><div class="sheet" id="sheet">
+  <div class="sh-top">
+    <div>
+      <div class="sh-id">Cartographe · G-DESIGN · V1 · planche 03/03 · page principale (Jeu)</div>
+      <div class="sh-title">03 — Cyanotype</div>
+      <p class="sh-why"><b>S’écarte franchement : la carte comme tirage de plan.</b> Fond bleu de Prusse, dessin au trait blanc crème, et l’ambre comme unique accent, réservé au repère que le joueur est en train de poser. Contraste fort, très reconnaissable dans un feed clair, et la carte de fin devient un vrai tirage à collectionner. Risque : s’éloigne des « tampons d’encre » de l’idéation ; le tampon devient un sceau au trait.</p>
+    </div>
+    <div><div class="sw"><div style="background:#173a63;color:#efe9da">prussian<br>#173a63</div><div style="background:#1c4471;color:#efe9da">lift<br>#1c4471</div><div style="background:#efe9da;color:#173a63">line<br>#efe9da</div><div style="background:rgba(239,233,218,.55);color:#173a63">line 55%<br>rgba(239,233,218,.55)</div><div style="background:#f0a83c;color:#173a63">amber<br>#f0a83c</div></div><p class="spec">Sans étroite capitales (Arial Narrow / Nimbus Sans Narrow) pour libellés · Serif (C059 / Century Schoolbook) italique pour la règle et les notes · Mono pour coordonnées · Accent unique : ambre · Motif : grande rose des vents en filigrane.</p></div>
+  </div>
+  <div class="frames">
+    <div><div class="fr-l">Desktop · 1440 × 900 · post dans le feed</div><div class="desk">
+  <div class="d-top"><div class="logo"></div><div class="search"></div><div class="me"></div></div>
+  <div class="d-body">
+    <div class="d-nav"><div class="bar" style="width:70%"></div><div class="bar" style="width:54%"></div><div class="bar" style="width:82%"></div><div class="bar" style="width:46%"></div><div class="bar" style="width:64%"></div><div class="bar" style="width:58%"></div><div class="bar" style="width:76%"></div><div class="bar" style="width:40%"></div></div>
+    <div class="d-col"><div class="post">
+      <div class="p-head"><span class="av" style="background:#173a63"></span><b>r/CartographeDaily</b><span>· 2 h</span></div>
+      <div class="p-title">Daily map · 12 Dec 2026</div>
+      <div class="g gd"><svg class="bigrose" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">
+<circle cx="50" cy="50" r="36"/><circle cx="50" cy="50" r="30" stroke-dasharray="1 3"/>
+<path d="M50 6L56 44 50 50 44 44Z" fill="currentColor"/><path d="M50 94L56 56 50 50 44 56Z"/>
+<path d="M94 50L56 56 50 50 56 44Z"/><path d="M6 50L44 56 50 50 44 44Z"/>
+<path d="M50 50L71 29M50 50L29 29M50 50L71 71M50 50L29 71" stroke-width=".8"/>
+<text x="50" y="4" text-anchor="middle" font-size="9" fill="currentColor" stroke="none" font-family="serif" dominant-baseline="hanging" transform="translate(0,-3)">N</text></svg>
+<div class="top"><span class="wm">Cartographe</span><span class="plate">Plate <b>12 · XII · 2026</b><br>time <b>01:42</b> · streak <b>6</b></span></div>
+<p class="rule">Pin the four landmarks so every survey note holds.</p>
+<div class="lms"><div class="lm act"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.2 20.5l1-10h3.6l1 10"/><path d="M9.6 10.5h4.8V7.2H9.6z"/><path d="M10 7.2l2-2.2 2 2.2"/><path d="M3.5 8.5h3M17.5 8.5h3M4.5 4.5l2 1.6M19.5 4.5l-2 1.6"/><path d="M10 15h4"/><path d="M5 20.5h14"/></svg><div><div class="nm">lighthouse</div><div class="co">tap a square</div></div></div><div class="lm"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 20.5l.9-8.5h2.2l.9 8.5"/><path d="M12 10.5L6.2 4.7M12 10.5l5.8-5.8M12 10.5l-5.8 5.8M12 10.5l5.8 5.8"/><path d="M6.2 4.7l1.6-1.6 3 3M17.8 4.7l1.6 1.6-3 3M6.2 16.3l-1.6-1.6 3-3M17.8 16.3l1.6-1.6-3-3"/><path d="M5 20.5h14"/></svg><div><div class="nm">mill</div><div class="co">row 3 · col 3</div></div></div><div class="lm"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="12" rx="5.6" ry="1.9"/><path d="M6.4 12v5.6c0 1.1 2.5 2 5.6 2s5.6-.9 5.6-2V12"/><path d="M7.4 11.2V5.4M16.6 11.2V5.4"/><path d="M5.6 5.4h12.8L16.6 3H7.4z"/><path d="M12 5.4v3.6"/><path d="M10.9 9h2.2v1.6h-2.2z"/></svg><div><div class="nm">well</div><div class="co">row 3 · col 1</div></div></div><div class="lm"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.3 20.5V8.4h1.9V6.2h1.9v2.2h1.8V6.2h1.9v2.2h1.9v12.1"/><path d="M10.6 20.5v-3a1.4 1.4 0 0 1 2.8 0v3"/><path d="M12 11.2v2.2"/><path d="M5 20.5h14"/></svg><div><div class="nm">tower</div><div class="co">row 3 · col 4</div></div></div></div>
+<div class="body"><div><div class="grid"><div class="cell"><span class="cc">1·1</span></div><div class="cell"><span class="cc">1·2</span></div><div class="cell"><span class="cc">1·3</span></div><div class="cell"><span class="cc">1·4</span></div><div class="cell"><span class="cc">2·1</span></div><div class="cell"><span class="cc">2·2</span></div><div class="cell"><span class="cc">2·3</span></div><div class="cell"><span class="cc">2·4</span></div><div class="cell on"><span class="cc">3·1</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="12" rx="5.6" ry="1.9"/><path d="M6.4 12v5.6c0 1.1 2.5 2 5.6 2s5.6-.9 5.6-2V12"/><path d="M7.4 11.2V5.4M16.6 11.2V5.4"/><path d="M5.6 5.4h12.8L16.6 3H7.4z"/><path d="M12 5.4v3.6"/><path d="M10.9 9h2.2v1.6h-2.2z"/></svg></div><div class="cell"><span class="cc">3·2</span></div><div class="cell on"><span class="cc">3·3</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 20.5l.9-8.5h2.2l.9 8.5"/><path d="M12 10.5L6.2 4.7M12 10.5l5.8-5.8M12 10.5l-5.8 5.8M12 10.5l5.8 5.8"/><path d="M6.2 4.7l1.6-1.6 3 3M17.8 4.7l1.6 1.6-3 3M6.2 16.3l-1.6-1.6 3-3M17.8 16.3l1.6-1.6-3-3"/><path d="M5 20.5h14"/></svg></div><div class="cell on"><span class="cc">3·4</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.3 20.5V8.4h1.9V6.2h1.9v2.2h1.8V6.2h1.9v2.2h1.9v12.1"/><path d="M10.6 20.5v-3a1.4 1.4 0 0 1 2.8 0v3"/><path d="M12 11.2v2.2"/><path d="M5 20.5h14"/></svg></div><div class="cell"><span class="cc">4·1</span></div><div class="cell"><span class="cc">4·2</span></div><div class="cell"><span class="cc">4·3</span></div><div class="cell tgt"><span class="cc">4·4</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.2 20.5l1-10h3.6l1 10"/><path d="M9.6 10.5h4.8V7.2H9.6z"/><path d="M10 7.2l2-2.2 2 2.2"/><path d="M3.5 8.5h3M17.5 8.5h3M4.5 4.5l2 1.6M19.5 4.5l-2 1.6"/><path d="M10 15h4"/><path d="M5 20.5h14"/></svg></div></div></div><div style="display:flex;flex-direction:column"><div class="nb"><div class="nb-h">Survey notes</div><div class="nn holds"><span class="k">&#10003; 1</span><span>The <b>well</b> shares a row with the <b>mill</b>.</span></div><div class="nn open"><span class="k">&middot; 2</span><span>The <b>lighthouse</b> is adjacent to the <b>mill</b>.</span></div><div class="nn holds"><span class="k">&#10003; 3</span><span>The <b>well</b> shares a row with the <b>tower</b>.</span></div><div class="nn open"><span class="k">&middot; 4</span><span>The <b>tower</b> stands north of the <b>lighthouse</b> (same column).</span></div></div><span class="btn" style="margin-top:auto">Ink the map · 3/4</span></div></div>
+</div>
+      <div class="p-act"><span><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M8 2.5l5 6H10v5H6v-5H3z"/></svg> 1.4k <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M8 13.5l5-6H10v-5H6v5H3z"/></svg></span><span><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M2.5 3.5h11v7.5H7l-3 2.5V11H2.5z"/></svg> 318</span><span><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5v8M5 5.5l3-3 3 3M3 9v4.5h10V9"/></svg> Share</span></div>
+    </div></div>
+    <div class="d-side"><div class="card"><div class="bar" style="width:60%"></div><div class="bar" style="width:90%"></div><div class="bar" style="width:84%"></div><div class="bar" style="width:72%"></div><div class="bar" style="width:40%"></div></div></div>
+  </div>
+</div></div>
+    <div><div class="fr-l">Mobile · 390 × 844 · contexte réel du post</div><div class="mob">
+  <div class="m-status"><span>9:41</span><i></i></div>
+  <div class="m-bar"><svg viewBox="0 0 16 16" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3L5 8l5 5"/></svg><span class="av" style="background:#173a63"></span>r/CartographeDaily</div>
+  <div class="m-meta"><div class="t">Daily map · 12 Dec 2026</div><div class="s">2 h · 318 comments</div></div>
+  <div class="m-view"><div class="g gm"><svg class="bigrose" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">
+<circle cx="50" cy="50" r="36"/><circle cx="50" cy="50" r="30" stroke-dasharray="1 3"/>
+<path d="M50 6L56 44 50 50 44 44Z" fill="currentColor"/><path d="M50 94L56 56 50 50 44 56Z"/>
+<path d="M94 50L56 56 50 50 56 44Z"/><path d="M6 50L44 56 50 50 44 44Z"/>
+<path d="M50 50L71 29M50 50L29 29M50 50L71 71M50 50L29 71" stroke-width=".8"/>
+<text x="50" y="4" text-anchor="middle" font-size="9" fill="currentColor" stroke="none" font-family="serif" dominant-baseline="hanging" transform="translate(0,-3)">N</text></svg>
+<div class="top"><span class="wm">Cartographe</span><span class="plate">time <b>01:42</b> · streak <b>6</b></span></div>
+<p class="rule">Pin the four landmarks so every note holds.</p>
+<div class="lms"><div class="lm act"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.2 20.5l1-10h3.6l1 10"/><path d="M9.6 10.5h4.8V7.2H9.6z"/><path d="M10 7.2l2-2.2 2 2.2"/><path d="M3.5 8.5h3M17.5 8.5h3M4.5 4.5l2 1.6M19.5 4.5l-2 1.6"/><path d="M10 15h4"/><path d="M5 20.5h14"/></svg><div><div class="nm">lighthouse</div><div class="co">tap a square</div></div></div><div class="lm"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 20.5l.9-8.5h2.2l.9 8.5"/><path d="M12 10.5L6.2 4.7M12 10.5l5.8-5.8M12 10.5l-5.8 5.8M12 10.5l5.8 5.8"/><path d="M6.2 4.7l1.6-1.6 3 3M17.8 4.7l1.6 1.6-3 3M6.2 16.3l-1.6-1.6 3-3M17.8 16.3l1.6-1.6-3-3"/><path d="M5 20.5h14"/></svg><div><div class="nm">mill</div><div class="co">row 3 · col 3</div></div></div><div class="lm"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="12" rx="5.6" ry="1.9"/><path d="M6.4 12v5.6c0 1.1 2.5 2 5.6 2s5.6-.9 5.6-2V12"/><path d="M7.4 11.2V5.4M16.6 11.2V5.4"/><path d="M5.6 5.4h12.8L16.6 3H7.4z"/><path d="M12 5.4v3.6"/><path d="M10.9 9h2.2v1.6h-2.2z"/></svg><div><div class="nm">well</div><div class="co">row 3 · col 1</div></div></div><div class="lm"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.3 20.5V8.4h1.9V6.2h1.9v2.2h1.8V6.2h1.9v2.2h1.9v12.1"/><path d="M10.6 20.5v-3a1.4 1.4 0 0 1 2.8 0v3"/><path d="M12 11.2v2.2"/><path d="M5 20.5h14"/></svg><div><div class="nm">tower</div><div class="co">row 3 · col 4</div></div></div></div><div class="grid"><div class="cell"><span class="cc">1·1</span></div><div class="cell"><span class="cc">1·2</span></div><div class="cell"><span class="cc">1·3</span></div><div class="cell"><span class="cc">1·4</span></div><div class="cell"><span class="cc">2·1</span></div><div class="cell"><span class="cc">2·2</span></div><div class="cell"><span class="cc">2·3</span></div><div class="cell"><span class="cc">2·4</span></div><div class="cell on"><span class="cc">3·1</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="12" rx="5.6" ry="1.9"/><path d="M6.4 12v5.6c0 1.1 2.5 2 5.6 2s5.6-.9 5.6-2V12"/><path d="M7.4 11.2V5.4M16.6 11.2V5.4"/><path d="M5.6 5.4h12.8L16.6 3H7.4z"/><path d="M12 5.4v3.6"/><path d="M10.9 9h2.2v1.6h-2.2z"/></svg></div><div class="cell"><span class="cc">3·2</span></div><div class="cell on"><span class="cc">3·3</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 20.5l.9-8.5h2.2l.9 8.5"/><path d="M12 10.5L6.2 4.7M12 10.5l5.8-5.8M12 10.5l-5.8 5.8M12 10.5l5.8 5.8"/><path d="M6.2 4.7l1.6-1.6 3 3M17.8 4.7l1.6 1.6-3 3M6.2 16.3l-1.6-1.6 3-3M17.8 16.3l1.6-1.6-3-3"/><path d="M5 20.5h14"/></svg></div><div class="cell on"><span class="cc">3·4</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.3 20.5V8.4h1.9V6.2h1.9v2.2h1.8V6.2h1.9v2.2h1.9v12.1"/><path d="M10.6 20.5v-3a1.4 1.4 0 0 1 2.8 0v3"/><path d="M12 11.2v2.2"/><path d="M5 20.5h14"/></svg></div><div class="cell"><span class="cc">4·1</span></div><div class="cell"><span class="cc">4·2</span></div><div class="cell"><span class="cc">4·3</span></div><div class="cell tgt"><span class="cc">4·4</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.2 20.5l1-10h3.6l1 10"/><path d="M9.6 10.5h4.8V7.2H9.6z"/><path d="M10 7.2l2-2.2 2 2.2"/><path d="M3.5 8.5h3M17.5 8.5h3M4.5 4.5l2 1.6M19.5 4.5l-2 1.6"/><path d="M10 15h4"/><path d="M5 20.5h14"/></svg></div></div><div class="nb"><div class="nb-h">Survey notes</div><div class="nn holds"><span class="k">&#10003; 1</span><span>The <b>well</b> shares a row with the <b>mill</b>.</span></div><div class="nn open"><span class="k">&middot; 2</span><span>The <b>lighthouse</b> is adjacent to the <b>mill</b>.</span></div><div class="nn holds"><span class="k">&#10003; 3</span><span>The <b>well</b> shares a row with the <b>tower</b>.</span></div><div class="nn open"><span class="k">&middot; 4</span><span>The <b>tower</b> stands north of the <b>lighthouse</b> (same column).</span></div></div>
+<span class="btn">Ink the map · 3/4</span></div></div>
+  <div class="m-act"><span><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M8 2.5l5 6H10v5H6v-5H3z"/></svg> 1.4k <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M8 13.5l5-6H10v-5H6v5H3z"/></svg></span><span><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M2.5 3.5h11v7.5H7l-3 2.5V11H2.5z"/></svg> 318</span><span><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5v8M5 5.5l3-3 3 3M3 9v4.5h10V9"/></svg></span></div>
+  <div class="m-home"><i></i></div>
+</div></div>
+  </div>
+  <div class="states"><div class="fr-l">États</div><div class="st-row">
+<div class="st"><div class="g" style="padding:16px;display:flex;gap:12px"><div class="grid" style="width:160px;height:80px;grid-template-columns:repeat(2,80px);grid-template-rows:80px"><div class="cell"><span class="cc">4·3</span></div><div class="cell tgt"><span class="cc">4·4</span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.2 20.5l1-10h3.6l1 10"/><path d="M9.6 10.5h4.8V7.2H9.6z"/><path d="M10 7.2l2-2.2 2 2.2"/><path d="M3.5 8.5h3M17.5 8.5h3M4.5 4.5l2 1.6M19.5 4.5l-2 1.6"/><path d="M10 15h4"/><path d="M5 20.5h14"/></svg></div></div></div><i>Case vide (coordonnée gravée) · case visée (cadre ambre)</i></div>
+<div class="st"><div class="g gd" style="width:520px;height:auto;padding:14px"><div class="lms"><div class="lm act"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.2 20.5l1-10h3.6l1 10"/><path d="M9.6 10.5h4.8V7.2H9.6z"/><path d="M10 7.2l2-2.2 2 2.2"/><path d="M3.5 8.5h3M17.5 8.5h3M4.5 4.5l2 1.6M19.5 4.5l-2 1.6"/><path d="M10 15h4"/><path d="M5 20.5h14"/></svg><div><div class="nm">lighthouse</div><div class="co">tap a square</div></div></div><div class="lm"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 20.5l.9-8.5h2.2l.9 8.5"/><path d="M12 10.5L6.2 4.7M12 10.5l5.8-5.8M12 10.5l-5.8 5.8M12 10.5l5.8 5.8"/><path d="M6.2 4.7l1.6-1.6 3 3M17.8 4.7l1.6 1.6-3 3M6.2 16.3l-1.6-1.6 3-3M17.8 16.3l1.6-1.6-3-3"/><path d="M5 20.5h14"/></svg><div><div class="nm">mill</div><div class="co">row 3 · col 3</div></div></div><div class="lm"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="12" rx="5.6" ry="1.9"/><path d="M6.4 12v5.6c0 1.1 2.5 2 5.6 2s5.6-.9 5.6-2V12"/><path d="M7.4 11.2V5.4M16.6 11.2V5.4"/><path d="M5.6 5.4h12.8L16.6 3H7.4z"/><path d="M12 5.4v3.6"/><path d="M10.9 9h2.2v1.6h-2.2z"/></svg><div><div class="nm">well</div><div class="co">row 3 · col 1</div></div></div><div class="lm"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.3 20.5V8.4h1.9V6.2h1.9v2.2h1.8V6.2h1.9v2.2h1.9v12.1"/><path d="M10.6 20.5v-3a1.4 1.4 0 0 1 2.8 0v3"/><path d="M12 11.2v2.2"/><path d="M5 20.5h14"/></svg><div><div class="nm">tower</div><div class="co">row 3 · col 4</div></div></div></div></div><i>Rangée de repères · ambre = repère actif, seule zone colorée</i></div>
+<div class="st"><div class="g gd" style="width:360px;height:auto;padding:14px"><div class="nb"><div class="nb-h">Survey notes</div><div class="nn holds"><span class="k">&#10003; 1</span><span>The <b>well</b> shares a row with the <b>mill</b>.</span></div><div class="nn open"><span class="k">&middot; 2</span><span>The <b>lighthouse</b> is adjacent to the <b>mill</b>.</span></div><div class="nn holds"><span class="k">&#10003; 3</span><span>The <b>well</b> shares a row with the <b>tower</b>.</span></div><div class="nn open"><span class="k">&middot; 4</span><span>The <b>tower</b> stands north of the <b>lighthouse</b> (same column).</span></div></div></div><i>Note tenue (coche ambre) · note ouverte (estompée)</i></div>
+<div class="st"><div class="g gd" style="width:280px;height:auto;padding:14px"><span class="btn" style="margin:0">Ink the map · 3/4</span><span class="btn go" style="margin-top:10px">Ink the map · 4/4</span></div><i>Bouton désactivé · prêt</i></div>
+<div class="st"><div class="g" style="padding:22px;display:flex;gap:22px"><span class="seal">Map<br>signed</span><span class="seal" style="color:var(--line2);border-color:var(--line2)">Territory<br>lost</span></div><i>Résultat · sceau révélé comme un tirage (fondu 400 ms)</i></div>
+</div></div>
+  <p class="notes-q"><b>Données de démo :</b> carte réelle du générateur pour le 2026-12-12 (textes d’indices du code). État figé : 3 repères posés, le phare est le repère actif, chrono 01:42, série de 6 jours. <b>Proposition à valider :</b> les notes de marge se cochent en direct quand les repères posés les satisfont (absent du code actuel, voir PAGES.md question 3).</p>
+</div><script>
+function fit(){var sh=document.getElementById('sheet');var z=Math.min(1,window.innerWidth/sh.offsetWidth);sh.style.transform='scale('+z+')';document.body.style.height=(sh.offsetHeight*z)+'px';}
+window.addEventListener('resize',fit);window.addEventListener('load',fit);fit();
+</script></body></html>
