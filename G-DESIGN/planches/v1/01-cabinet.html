@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cartographe · V1 · Cabinet</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#d9d6cf}
+body{overflow-x:hidden;-webkit-font-smoothing:antialiased}
+.sheet{width:1980px;padding:40px 48px 56px;transform-origin:0 0;font-family:"Helvetica Neue",Arial,"Liberation Sans",sans-serif;color:#1c1a17}
+.sh-top{display:grid;grid-template-columns:1fr 520px;gap:48px;margin-bottom:30px;align-items:end}
+.sh-id{font:600 11px/1 "DejaVu Sans Mono",Menlo,monospace;letter-spacing:.14em;text-transform:uppercase;color:#6d675c}
+.sh-title{font-size:44px;font-weight:700;letter-spacing:-.02em;margin:12px 0 10px}
+.sh-why{font-size:15px;line-height:1.5;max-width:860px;color:#3a372f}
+.sh-why b{font-weight:600}
+.sw{display:flex;gap:10px;margin-bottom:14px}
+.sw div{flex:1;height:58px;border-radius:6px;padding:8px;display:flex;align-items:flex-end;font:600 10px/1.2 "DejaVu Sans Mono",monospace;letter-spacing:.06em;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)}
+.spec{font-size:13px;color:#3a372f;line-height:1.5}
+.frames{display:flex;gap:48px;align-items:flex-start}
+.fr-l{font:600 11px/1 "DejaVu Sans Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:#6d675c;margin-bottom:10px}
+/* desktop feed chrome — neutral on purpose: no platform branding */
+.desk{width:1440px;height:900px;background:#f4f4f2;border-radius:10px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(0,0,0,.35);display:flex;flex-direction:column}
+.d-top{height:56px;background:#fff;border-bottom:1px solid #e3e3df;display:flex;align-items:center;padding:0 24px;gap:20px;flex:none}
+.d-top .logo{width:32px;height:32px;border-radius:50%;background:#d8d8d3}
+.d-top .search{flex:none;width:560px;height:38px;border-radius:19px;background:#efefeb;margin:0 auto}
+.d-top .me{width:32px;height:32px;border-radius:50%;background:#cfcfc9}
+.d-body{flex:1;display:grid;grid-template-columns:232px 1fr 312px;gap:24px;padding:20px 24px 0;overflow:hidden}
+.d-nav{border-right:1px solid #e3e3df;padding-right:16px}
+.bar{height:10px;border-radius:5px;background:#e2e2dd;margin:14px 0}
+.d-col{width:756px;justify-self:center}
+.post{background:#fff;border-radius:14px;border:1px solid #e3e3df;overflow:hidden}
+.p-head{display:flex;align-items:center;gap:10px;padding:12px 16px 4px;font-size:12px;color:#5f5f5a}
+.p-head .av{width:24px;height:24px;border-radius:50%;flex:none}
+.p-head b{color:#1c1c1a;font-weight:600}
+.p-title{padding:2px 16px 10px;font-size:18px;font-weight:600;color:#1c1c1a;letter-spacing:-.01em}
+.p-act{display:flex;gap:10px;padding:10px 16px 12px;font-size:12px;font-weight:600;color:#4c4c48}
+.p-act span{display:inline-flex;align-items:center;gap:6px;background:#f0f0ec;border-radius:16px;padding:7px 12px}
+.d-side .card{background:#fff;border:1px solid #e3e3df;border-radius:14px;padding:16px}
+/* mobile chrome */
+.mob{width:390px;height:844px;background:#fff;border-radius:44px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(0,0,0,.4);outline:10px solid #111;display:flex;flex-direction:column;flex:none}
+.m-status{height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 30px;font:600 14px/1 "Helvetica Neue",Arial,sans-serif;color:#111;flex:none}
+.m-status i{width:70px;height:10px;border-radius:5px;background:#111;display:block}
+.m-bar{height:48px;display:flex;align-items:center;gap:10px;padding:0 14px;font-size:14px;font-weight:600;color:#1c1c1a;border-bottom:1px solid #ececea;flex:none}
+.m-bar .av{width:24px;height:24px;border-radius:50%}
+.m-meta{padding:8px 14px 6px;flex:none}
+.m-meta .t{font-size:15px;font-weight:600;color:#1c1c1a}
+.m-meta .s{font-size:11px;color:#6b6b66;margin-top:2px}
+.m-view{flex:none;height:616px;overflow:hidden;position:relative}
+.m-act{flex:1;display:flex;gap:8px;align-items:center;padding:0 14px;font-size:12px;font-weight:600;color:#4c4c48}
+.m-act span{display:inline-flex;align-items:center;gap:5px;background:#f0f0ec;border-radius:16px;padding:6px 10px}
+.m-home{height:22px;display:flex;justify-content:center;align-items:center;flex:none}
+.m-home i{width:134px;height:5px;border-radius:3px;background:#111;display:block}
+/* states strip */
+.states{margin-top:40px}
+.st-row{display:flex;gap:22px;flex-wrap:wrap;align-items:flex-start}
+.st{display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+.st>i{font:500 11px/1.3 "DejaVu Sans Mono",monospace;font-style:normal;color:#6d675c;max-width:220px}
+.notes-q{margin-top:32px;font-size:13px;color:#3a372f;line-height:1.55;max-width:1200px}
+.notes-q b{font-weight:600}
+
+.g{--paper:#e8dcc3;--paper2:#e1d3b5;--ink:#4a3728;--ink2:#7d6650;--rule:rgba(74,55,40,.32);--stamp:#9e2b25;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"P052","URW Palladio L","Book Antiqua",Georgia,serif;
+  --mono:"DejaVu Sans Mono",Menlo,"Liberation Mono",monospace;
+  background:var(--paper);color:var(--ink);font-family:var(--serif);position:relative;overflow:hidden;
+  background-image:radial-gradient(120% 90% at 50% 40%,rgba(255,250,236,.55),rgba(255,250,236,0) 60%),radial-gradient(140% 120% at 50% 50%,rgba(0,0,0,0) 62%,rgba(110,80,40,.18))}
+.g .hd{display:flex;align-items:baseline;justify-content:space-between;border-bottom:1px solid var(--rule)}
+.g .wm{font-variant:small-caps;letter-spacing:.24em;font-size:15px;font-weight:600}
+.g .dt{font-style:italic;color:var(--ink2)}
+.g .meta{font:500 12px/1 var(--mono);letter-spacing:.06em;color:var(--ink2);display:flex;gap:16px}
+.g .meta b{color:var(--ink);font-weight:600}
+.g .rule{font-style:italic;color:var(--ink)}
+.g .gridwrap{position:relative;display:grid}
+.g .cx,.g .cy{font:500 11px/1 var(--mono);color:var(--ink2);display:grid;text-align:center}
+.g .cy{align-items:center}
+.g .grid{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--ink);outline:1px solid var(--ink);outline-offset:4px;background:var(--paper2)}
+.g .cell{border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);position:relative;display:flex;align-items:center;justify-content:center;color:var(--ink)}
+.g .cell:nth-child(4n){border-right:0}.g .cell:nth-child(n+13){border-bottom:0}
+.g .cell .ic{width:58%;height:58%}
+.g .cell.on::after{content:"";position:absolute;inset:14%;border:2px solid var(--stamp);border-radius:50%;opacity:.85;transform:rotate(-8deg);mix-blend-mode:multiply}
+.g .cell.on .ic{color:var(--ink)}
+.g .cell.tgt{background:rgba(158,43,37,.07)}
+.g .cell.tgt .ic{color:var(--stamp);opacity:.45}
+.g .cell.tgt::before{content:"";position:absolute;inset:8px;border:1px dashed var(--stamp)}
+.g .rose{position:absolute;color:var(--ink)}
+.g .nh{font-variant:small-caps;letter-spacing:.18em;font-size:13px;color:var(--ink2);border-bottom:1px solid var(--rule);padding-bottom:6px}
+.g ol{list-style:none}
+.g .note{display:grid;grid-template-columns:28px 1fr 18px;gap:6px;align-items:start;border-bottom:1px dotted var(--rule)}
+.g .note .n{font-style:italic;color:var(--ink2)}
+.g .note b{font-weight:600;font-variant:small-caps;letter-spacing:.04em;font-size:1.06em}
+.g .note .mk{width:16px;height:16px;margin-top:2px}
+.g .note.holds .mk{color:var(--stamp)}
+.g .note.open .mk{color:var(--rule)}
+.g .tray{display:grid;grid-template-columns:repeat(4,1fr)}
+.g .tok{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 2px 7px;border:1px solid var(--rule);background:rgba(255,250,236,.35);position:relative}
+.g .tok .ic{width:30px;height:30px}
+.g .tok .nm{font-variant:small-caps;letter-spacing:.08em;font-size:13px}
+.g .tok .co{font:500 10px/1 var(--mono);color:var(--ink2);letter-spacing:.04em}
+.g .tok.done{color:var(--ink2)}
+.g .tok.act{border:1.5px solid var(--stamp);background:rgba(158,43,37,.06);color:var(--stamp)}
+.g .tok.act .co{color:var(--stamp)}
+.g .cta{display:block;width:100%;font:600 13px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;padding:15px 0;text-align:center;border:1.5px solid var(--ink);color:var(--ink);background:transparent;opacity:.5}
+.g .cta.go{opacity:1;background:var(--stamp);border-color:var(--stamp);color:#f6eedb}
+.g .stamp{display:inline-block;font:700 20px/1 var(--mono);letter-spacing:.22em;color:var(--stamp);border:3px double var(--stamp);padding:7px 10px 6px 13px;border-radius:3px;transform:rotate(-6deg);mix-blend-mode:multiply}
+/* desktop */
+.gd{width:756px;height:592px;padding:22px 30px 24px}
+.gd .hd{padding-bottom:10px}
+.gd .dt{font-size:15px}
+.gd .rule{font-size:16px;margin:14px 0 16px}
+.gd .body{display:grid;grid-template-columns:340px 1fr;gap:0 40px}
+.gd .gridwrap{grid-template-columns:18px 322px;grid-template-rows:18px 322px;gap:6px 6px}
+.gd .cx{grid-template-columns:repeat(4,1fr);grid-column:2}
+.gd .cy{grid-template-rows:repeat(4,1fr)}
+.gd .grid{width:322px;height:322px;grid-template-rows:repeat(4,1fr)}
+.gd .rose{width:64px;height:64px;right:-30px;top:-34px;background:var(--paper);border-radius:50%}
+.gd .tray{gap:8px;margin-top:26px;width:346px}
+.gd .note{font-size:15.5px;line-height:1.38;padding:9px 0}
+.gd .side{display:flex;flex-direction:column}
+.gd .side .cta{margin-top:auto}
+.gd .hint{font-style:italic;font-size:13.5px;color:var(--ink2);margin:14px 0 16px;line-height:1.4}
+/* mobile */
+.gm{width:390px;height:616px;padding:12px 18px 14px;display:flex;flex-direction:column}
+.gm .hd{padding-bottom:7px}
+.gm .wm{font-size:14px}
+.gm .meta{font-size:11px;gap:12px}
+.gm .rule{font-size:14px;margin:7px 0 9px;line-height:1.3}
+.gm .tray{gap:6px}
+.gm .tok{padding:5px 2px 5px;gap:2px}
+.gm .tok .ic{width:24px;height:24px}
+.gm .tok .nm{font-size:12px}
+.gm .gridwrap{grid-template-columns:14px 268px;grid-template-rows:14px 268px;gap:4px;justify-content:center;margin:10px 0 6px}
+.gm .cx{grid-template-columns:repeat(4,1fr);grid-column:2}
+.gm .cy{grid-template-rows:repeat(4,1fr)}
+.gm .grid{width:268px;height:268px;grid-template-rows:repeat(4,1fr)}
+.gm .rose{width:44px;height:44px;right:-26px;top:-22px;background:var(--paper);border-radius:50%}
+.gm .note{font-size:13px;line-height:1.3;padding:4px 0;grid-template-columns:22px 1fr 16px}
+.gm .cta{margin-top:auto;padding:13px 0;font-size:12px}
+</style></head>
+<body><div class="sheet" id="sheet">
+  <div class="sh-top">
+    <div>
+      <div class="sh-id">Cartographe · G-DESIGN · V1 · planche 01/03 · page principale (Jeu)</div>
+      <div class="sh-title">01 — Cabinet</div>
+      <p class="sh-why"><b>La direction du brief, tenue sans cliché.</b> Un plan de cabinet de cartographe : papier parchemin, encre sépia, et le rouge réservé au seul geste du joueur (le repère qu’il tamponne, l’action finale). La serif ancienne porte les noms de lieux, la mono porte les coordonnées, la rose des vents ancre le nord sur la grille. Risque : le plus « attendu » des trois, sa force tient à la retenue (pas de taches de café, pas de parchemin déchiré).</p>
+    </div>
+    <div><div class="sw"><div style="background:#e8dcc3;color:#4a3728">parchment<br>#e8dcc3</div><div style="background:#e1d3b5;color:#4a3728">cell<br>#e1d3b5</div><div style="background:#4a3728;color:#e8dcc3">sepia<br>#4a3728</div><div style="background:#7d6650;color:#e8dcc3">faded<br>#7d6650</div><div style="background:#9e2b25;color:#f6eedb">stamp<br>#9e2b25</div></div><p class="spec">Serif ancienne (Iowan / Palatino / P052, petites capitales pour les lieux) · Mono (DejaVu Sans Mono) pour coordonnées, chrono, CTA · Accent unique : rouge tampon · Motif : grille double filet + rose des vents.</p></div>
+  </div>
+  <div class="frames">
+    <div><div class="fr-l">Desktop · 1440 × 900 · post dans le feed</div><div class="desk">
+  <div class="d-top"><div class="logo"></div><div class="search"></div><div class="me"></div></div>
+  <div class="d-body">
+    <div class="d-nav"><div class="bar" style="width:70%"></div><div class="bar" style="width:54%"></div><div class="bar" style="width:82%"></div><div class="bar" style="width:46%"></div><div class="bar" style="width:64%"></div><div class="bar" style="width:58%"></div><div class="bar" style="width:76%"></div><div class="bar" style="width:40%"></div></div>
+    <div class="d-col"><div class="post">
+      <div class="p-head"><span class="av" style="background:#9e2b25"></span><b>r/CartographeDaily</b><span>· 2 h</span></div>
+      <div class="p-title">Daily map · 12 Dec 2026</div>
+      <div class="g gd"><div class="hd"><span class="wm">Cartographe</span><span class="dt">Sheet of 12 December 2026</span><span class="meta"><span><b>01:42</b></span><span>streak <b>6</b></span></span></div>
+<p class="rule">Pin the four landmarks so every margin note holds.</p>
+<div class="body">
+  <div><div class="gridwrap"><span></span><div class="cx"><span>1</span><span>2</span><span>3</span><span>4</span></div><div class="cy"><span>1</span><span>2</span><span>3</span><span>4</span></div><div style="position:relative"><div class="grid"><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell on"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="12" rx="5.6" ry="1.9"/><path d="M6.4 12v5.6c0 1.1 2.5 2 5.6 2s5.6-.9 5.6-2V12"/><path d="M7.4 11.2V5.4M16.6 11.2V5.4"/><path d="M5.6 5.4h12.8L16.6 3H7.4z"/><path d="M12 5.4v3.6"/><path d="M10.9 9h2.2v1.6h-2.2z"/></svg></div><div class="cell"></div><div class="cell on"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 20.5l.9-8.5h2.2l.9 8.5"/><path d="M12 10.5L6.2 4.7M12 10.5l5.8-5.8M12 10.5l-5.8 5.8M12 10.5l5.8 5.8"/><path d="M6.2 4.7l1.6-1.6 3 3M17.8 4.7l1.6 1.6-3 3M6.2 16.3l-1.6-1.6 3-3M17.8 16.3l1.6-1.6-3-3"/><path d="M5 20.5h14"/></svg></div><div class="cell on"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.3 20.5V8.4h1.9V6.2h1.9v2.2h1.8V6.2h1.9v2.2h1.9v12.1"/><path d="M10.6 20.5v-3a1.4 1.4 0 0 1 2.8 0v3"/><path d="M12 11.2v2.2"/><path d="M5 20.5h14"/></svg></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell tgt"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.2 20.5l1-10h3.6l1 10"/><path d="M9.6 10.5h4.8V7.2H9.6z"/><path d="M10 7.2l2-2.2 2 2.2"/><path d="M3.5 8.5h3M17.5 8.5h3M4.5 4.5l2 1.6M19.5 4.5l-2 1.6"/><path d="M10 15h4"/><path d="M5 20.5h14"/></svg></div></div><svg class="rose" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">
+<circle cx="50" cy="50" r="36"/><circle cx="50" cy="50" r="30" stroke-dasharray="1 3"/>
+<path d="M50 6L56 44 50 50 44 44Z" fill="currentColor"/><path d="M50 94L56 56 50 50 44 56Z"/>
+<path d="M94 50L56 56 50 50 56 44Z"/><path d="M6 50L44 56 50 50 44 44Z"/>
+<path d="M50 50L71 29M50 50L29 29M50 50L71 71M50 50L29 71" stroke-width=".8"/>
+<text x="50" y="4" text-anchor="middle" font-size="9" fill="currentColor" stroke="none" font-family="serif" dominant-baseline="hanging" transform="translate(0,-3)">N</text></svg></div></div><div class="tray"><div class="tok act"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.2 20.5l1-10h3.6l1 10"/><path d="M9.6 10.5h4.8V7.2H9.6z"/><path d="M10 7.2l2-2.2 2 2.2"/><path d="M3.5 8.5h3M17.5 8.5h3M4.5 4.5l2 1.6M19.5 4.5l-2 1.6"/><path d="M10 15h4"/><path d="M5 20.5h14"/></svg><span class="nm">lighthouse</span><span class="co">placing</span></div><div class="tok done"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 20.5l.9-8.5h2.2l.9 8.5"/><path d="M12 10.5L6.2 4.7M12 10.5l5.8-5.8M12 10.5l-5.8 5.8M12 10.5l5.8 5.8"/><path d="M6.2 4.7l1.6-1.6 3 3M17.8 4.7l1.6 1.6-3 3M6.2 16.3l-1.6-1.6 3-3M17.8 16.3l1.6-1.6-3-3"/><path d="M5 20.5h14"/></svg><span class="nm">mill</span><span class="co">r3 · c3</span></div><div class="tok done"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="12" rx="5.6" ry="1.9"/><path d="M6.4 12v5.6c0 1.1 2.5 2 5.6 2s5.6-.9 5.6-2V12"/><path d="M7.4 11.2V5.4M16.6 11.2V5.4"/><path d="M5.6 5.4h12.8L16.6 3H7.4z"/><path d="M12 5.4v3.6"/><path d="M10.9 9h2.2v1.6h-2.2z"/></svg><span class="nm">well</span><span class="co">r3 · c1</span></div><div class="tok done"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.3 20.5V8.4h1.9V6.2h1.9v2.2h1.8V6.2h1.9v2.2h1.9v12.1"/><path d="M10.6 20.5v-3a1.4 1.4 0 0 1 2.8 0v3"/><path d="M12 11.2v2.2"/><path d="M5 20.5h14"/></svg><span class="nm">tower</span><span class="co">r3 · c4</span></div></div></div>
+  <div class="side"><div class="nh">Margin notes</div><ol><li class="note holds"><span class="n">i.</span><span>The <b>well</b> shares a row with the <b>mill</b>.</span><svg class="mk" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 4.5"/></svg></li><li class="note open"><span class="n">ii.</span><span>The <b>lighthouse</b> is adjacent to the <b>mill</b>.</span><svg class="mk" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="2.2"/></svg></li><li class="note holds"><span class="n">iii.</span><span>The <b>well</b> shares a row with the <b>tower</b>.</span><svg class="mk" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 4.5"/></svg></li><li class="note open"><span class="n">iv.</span><span>The <b>tower</b> stands north of the <b>lighthouse</b> (same column).</span><svg class="mk" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="2.2"/></svg></li></ol>
+    <p class="hint">Pick a landmark, then tap a free square. North is up.</p>
+    <span class="cta">Ink the map · 3/4</span></div>
+</div></div>
+      <div class="p-act"><span><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M8 2.5l5 6H10v5H6v-5H3z"/></svg> 1.4k <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M8 13.5l5-6H10v-5H6v5H3z"/></svg></span><span><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M2.5 3.5h11v7.5H7l-3 2.5V11H2.5z"/></svg> 318</span><span><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5v8M5 5.5l3-3 3 3M3 9v4.5h10V9"/></svg> Share</span></div>
+    </div></div>
+    <div class="d-side"><div class="card"><div class="bar" style="width:60%"></div><div class="bar" style="width:90%"></div><div class="bar" style="width:84%"></div><div class="bar" style="width:72%"></div><div class="bar" style="width:40%"></div></div></div>
+  </div>
+</div></div>
+    <div><div class="fr-l">Mobile · 390 × 844 · contexte réel du post</div><div class="mob">
+  <div class="m-status"><span>9:41</span><i></i></div>
+  <div class="m-bar"><svg viewBox="0 0 16 16" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3L5 8l5 5"/></svg><span class="av" style="background:#9e2b25"></span>r/CartographeDaily</div>
+  <div class="m-meta"><div class="t">Daily map · 12 Dec 2026</div><div class="s">2 h · 318 comments</div></div>
+  <div class="m-view"><div class="g gm"><div class="hd"><span class="wm">Cartographe</span><span class="meta"><span><b>01:42</b></span><span>streak <b>6</b></span></span></div>
+<p class="rule">Pin the four landmarks so every margin note holds.</p>
+<div class="tray"><div class="tok act"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.2 20.5l1-10h3.6l1 10"/><path d="M9.6 10.5h4.8V7.2H9.6z"/><path d="M10 7.2l2-2.2 2 2.2"/><path d="M3.5 8.5h3M17.5 8.5h3M4.5 4.5l2 1.6M19.5 4.5l-2 1.6"/><path d="M10 15h4"/><path d="M5 20.5h14"/></svg><span class="nm">lighthouse</span><span class="co">placing</span></div><div class="tok done"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 20.5l.9-8.5h2.2l.9 8.5"/><path d="M12 10.5L6.2 4.7M12 10.5l5.8-5.8M12 10.5l-5.8 5.8M12 10.5l5.8 5.8"/><path d="M6.2 4.7l1.6-1.6 3 3M17.8 4.7l1.6 1.6-3 3M6.2 16.3l-1.6-1.6 3-3M17.8 16.3l1.6-1.6-3-3"/><path d="M5 20.5h14"/></svg><span class="nm">mill</span><span class="co">r3 · c3</span></div><div class="tok done"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="12" rx="5.6" ry="1.9"/><path d="M6.4 12v5.6c0 1.1 2.5 2 5.6 2s5.6-.9 5.6-2V12"/><path d="M7.4 11.2V5.4M16.6 11.2V5.4"/><path d="M5.6 5.4h12.8L16.6 3H7.4z"/><path d="M12 5.4v3.6"/><path d="M10.9 9h2.2v1.6h-2.2z"/></svg><span class="nm">well</span><span class="co">r3 · c1</span></div><div class="tok done"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.3 20.5V8.4h1.9V6.2h1.9v2.2h1.8V6.2h1.9v2.2h1.9v12.1"/><path d="M10.6 20.5v-3a1.4 1.4 0 0 1 2.8 0v3"/><path d="M12 11.2v2.2"/><path d="M5 20.5h14"/></svg><span class="nm">tower</span><span class="co">r3 · c4</span></div></div><div class="gridwrap"><span></span><div class="cx"><span>1</span><span>2</span><span>3</span><span>4</span></div><div class="cy"><span>1</span><span>2</span><span>3</span><span>4</span></div><div style="position:relative"><div class="grid"><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell on"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="12" rx="5.6" ry="1.9"/><path d="M6.4 12v5.6c0 1.1 2.5 2 5.6 2s5.6-.9 5.6-2V12"/><path d="M7.4 11.2V5.4M16.6 11.2V5.4"/><path d="M5.6 5.4h12.8L16.6 3H7.4z"/><path d="M12 5.4v3.6"/><path d="M10.9 9h2.2v1.6h-2.2z"/></svg></div><div class="cell"></div><div class="cell on"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 20.5l.9-8.5h2.2l.9 8.5"/><path d="M12 10.5L6.2 4.7M12 10.5l5.8-5.8M12 10.5l-5.8 5.8M12 10.5l5.8 5.8"/><path d="M6.2 4.7l1.6-1.6 3 3M17.8 4.7l1.6 1.6-3 3M6.2 16.3l-1.6-1.6 3-3M17.8 16.3l1.6-1.6-3-3"/><path d="M5 20.5h14"/></svg></div><div class="cell on"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.3 20.5V8.4h1.9V6.2h1.9v2.2h1.8V6.2h1.9v2.2h1.9v12.1"/><path d="M10.6 20.5v-3a1.4 1.4 0 0 1 2.8 0v3"/><path d="M12 11.2v2.2"/><path d="M5 20.5h14"/></svg></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell tgt"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.2 20.5l1-10h3.6l1 10"/><path d="M9.6 10.5h4.8V7.2H9.6z"/><path d="M10 7.2l2-2.2 2 2.2"/><path d="M3.5 8.5h3M17.5 8.5h3M4.5 4.5l2 1.6M19.5 4.5l-2 1.6"/><path d="M10 15h4"/><path d="M5 20.5h14"/></svg></div></div><svg class="rose" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">
+<circle cx="50" cy="50" r="36"/><circle cx="50" cy="50" r="30" stroke-dasharray="1 3"/>
+<path d="M50 6L56 44 50 50 44 44Z" fill="currentColor"/><path d="M50 94L56 56 50 50 44 56Z"/>
+<path d="M94 50L56 56 50 50 56 44Z"/><path d="M6 50L44 56 50 50 44 44Z"/>
+<path d="M50 50L71 29M50 50L29 29M50 50L71 71M50 50L29 71" stroke-width=".8"/>
+<text x="50" y="4" text-anchor="middle" font-size="9" fill="currentColor" stroke="none" font-family="serif" dominant-baseline="hanging" transform="translate(0,-3)">N</text></svg></div></div><ol><li class="note holds"><span class="n">i.</span><span>The <b>well</b> shares a row with the <b>mill</b>.</span><svg class="mk" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 4.5"/></svg></li><li class="note open"><span class="n">ii.</span><span>The <b>lighthouse</b> is adjacent to the <b>mill</b>.</span><svg class="mk" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="2.2"/></svg></li><li class="note holds"><span class="n">iii.</span><span>The <b>well</b> shares a row with the <b>tower</b>.</span><svg class="mk" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 4.5"/></svg></li><li class="note open"><span class="n">iv.</span><span>The <b>tower</b> stands north of the <b>lighthouse</b> (same column).</span><svg class="mk" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="2.2"/></svg></li></ol>
+<span class="cta">Ink the map · 3/4</span></div></div>
+  <div class="m-act"><span><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M8 2.5l5 6H10v5H6v-5H3z"/></svg> 1.4k <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M8 13.5l5-6H10v-5H6v5H3z"/></svg></span><span><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M2.5 3.5h11v7.5H7l-3 2.5V11H2.5z"/></svg> 318</span><span><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5v8M5 5.5l3-3 3 3M3 9v4.5h10V9"/></svg></span></div>
+  <div class="m-home"><i></i></div>
+</div></div>
+  </div>
+  <div class="states"><div class="fr-l">États</div><div class="st-row">
+<div class="st"><div class="g" style="padding:14px;display:flex;gap:10px"><div class="grid" style="width:156px;height:78px;grid-template-columns:repeat(2,78px)"><div class="cell"></div><div class="cell tgt"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.2 20.5l1-10h3.6l1 10"/><path d="M9.6 10.5h4.8V7.2H9.6z"/><path d="M10 7.2l2-2.2 2 2.2"/><path d="M3.5 8.5h3M17.5 8.5h3M4.5 4.5l2 1.6M19.5 4.5l-2 1.6"/><path d="M10 15h4"/><path d="M5 20.5h14"/></svg></div></div></div><i>Case vide · case visée par le repère actif (contour tireté, aperçu à 45 %)</i></div>
+<div class="st"><div class="g" style="padding:14px"><div class="grid" style="width:78px;height:78px;grid-template-columns:78px"><div class="cell on" style="border:0"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 20.5l.9-8.5h2.2l.9 8.5"/><path d="M12 10.5L6.2 4.7M12 10.5l5.8-5.8M12 10.5l-5.8 5.8M12 10.5l5.8 5.8"/><path d="M6.2 4.7l1.6-1.6 3 3M17.8 4.7l1.6 1.6-3 3M6.2 16.3l-1.6-1.6 3-3M17.8 16.3l1.6-1.6-3-3"/><path d="M5 20.5h14"/></svg></div></div></div><i>Repère posé · anneau-tampon tourné de -8°, posé en 120 ms</i></div>
+<div class="st"><div class="g" style="padding:14px;width:330px"><ol><li class="note holds"><span class="n">i.</span><span>The <b>well</b> shares a row with the <b>mill</b>.</span><svg class="mk" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3L13 4.5"/></svg></li><li class="note open"><span class="n">ii.</span><span>The <b>lighthouse</b> is adjacent to the <b>mill</b>.</span><svg class="mk" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="2.2"/></svg></li></ol></div><i>Note tenue (coche rouge) · note ouverte (point)</i></div>
+<div class="st"><div class="g gd" style="width:300px;height:auto;padding:14px"><span class="cta">Ink the map · 3/4</span><div style="height:10px"></div><span class="cta go">Ink the map · 4/4</span></div><i>CTA désactivé · prêt (seule couleur pleine de l'écran)</i></div>
+<div class="st"><div class="g" style="padding:26px 30px;display:flex;gap:26px;align-items:center"><span class="stamp">Map signed</span><span class="stamp" style="color:var(--ink);border-color:var(--ink);transform:rotate(4deg)">Territory lost</span></div><i>Résultat (textes du code) · tampon frappé : échelle 1.25 → 1, 180 ms</i></div>
+</div></div>
+  <p class="notes-q"><b>Données de démo :</b> carte réelle du générateur pour le 2026-12-12 (textes d’indices du code). État figé : 3 repères posés, le phare est le repère actif, chrono 01:42, série de 6 jours. <b>Proposition à valider :</b> les notes de marge se cochent en direct quand les repères posés les satisfont (absent du code actuel, voir PAGES.md question 3).</p>
+</div><script>
+function fit(){var sh=document.getElementById('sheet');var z=Math.min(1,window.innerWidth/sh.offsetWidth);sh.style.transform='scale('+z+')';document.body.style.height=(sh.offsetHeight*z)+'px';}
+window.addEventListener('resize',fit);window.addEventListener('load',fit);fit();
+</script></body></html>
